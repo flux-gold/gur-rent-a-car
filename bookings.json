@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1678912345678,
+    "name": "Örnek Müşteri",
+    "phone": "05554443322",
+    "email": "ornek@email.com",
+    "vehicle": "1",
+    "pickupDate": "15.12.2023",
+    "returnDate": "20.12.2023",
+    "message": "Test rezervasyonu",
+    "date": "14.12.2023, 10:30:15",
+    "status": "pending"
+  }
+]
