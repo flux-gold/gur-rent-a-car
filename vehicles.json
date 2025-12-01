@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "name": "Hyundai Accent Blue",
+    "segment": "ekonomik",
+    "transmission": "Otomatik",
+    "fuel": "Benzin",
+    "year": "2022",
+    "available": true,
+    "features": ["Klima", "Bluetooth", "Park Sensörü", "USB"],
+    "image": "fa-car"
+  }
+]

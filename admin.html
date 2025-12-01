@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Gür Rent A Car</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .admin-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0F0F0F 0%, #1A1A1A 100%);
+            padding: 20px;
+        }
+        
+        .admin-header {
+            background: #1A1A1A;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #F0C037;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-title {
+            color: #F0C037;
+            font-size: 28px;
+        }
+        
+        .admin-nav {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .admin-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background: #2a2a2a;
+            transition: all 0.3s;
+        }
+        
+        .admin-nav a:hover {
+            background: #F0C037;
+            color: #0F0F0F;
+        }
+        
+        .admin-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-card {
+            background: #1A1A1A;
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid #333;
+        }
+        
+        .admin-card h3 {
+            color: #F0C037;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: #1A1A1A;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+        
+        .stat-card i {
+            font-size: 30px;
+            color: #F0C037;
+            margin-bottom: 10px;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: #1A1A1A;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .login-title {
+            text-align: center;
+            color: #F0C037;
+            margin-bottom: 30px;
+        }
+        
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        
+        th {
+            background: #2a2a2a;
+            color: #F0C037;
+        }
+        
+        tr:hover {
+            background: #2a2a2a;
+        }
+        
+        .status-available {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .status-unavailable {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        
+        .edit-btn {
+            background: #F0C037;
+            color: #0F0F0F;
+        }
+        
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .toggle-btn {
+            background: #28a745;
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #F0C037;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background: #2a2a2a;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: white;
+        }
+        
+        .vehicle-image-preview {
+            width: 100%;
+            height: 150px;
+            background: #2a2a2a;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .vehicle-image-preview i {
+            font-size: 50px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container" id="adminContainer">
+        <!-- Admin Giriş Ekranı -->
+        <div id="loginScreen" class="login-container">
+            <h2 class="login-title"><i class="fas fa-lock"></i> Admin Girişi</h2>
+            <div class="form-group">
+                <label for="adminUsername">Kullanıcı Adı</label>
+                <input type="text" id="adminUsername" placeholder="admin">
+            </div>
+            <div class="form-group">
+                <label for="adminPassword">Şifre</label>
+                <input type="password" id="adminPassword" placeholder="••••••••">
+            </div>
+            <button id="loginBtn" class="submit-btn" style="width: 100%;">
+                <i class="fas fa-sign-in-alt"></i> Giriş Yap
+            </button>
+            <p style="text-align: center; margin-top: 20px; color: #999;">
+                Varsayılan: admin / gur2023
+            </p>
+        </div>
+        
+        <!-- Admin Paneli (Giriş yapılınca gösterilecek) -->
+        <div id="adminPanel" style="display: none;">
+            <div class="admin-header">
+                <h1 class="admin-title"><i class="fas fa-cog"></i> Gür Rent A Car Admin Paneli</h1>
+                <div class="admin-nav">
+                    <a href="index.html"><i class="fas fa-home"></i> Siteye Dön</a>
+                    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-car"></i>
+                    <div class="stat-number" id="totalVehicles">17</div>
+                    <div class="stat-label">Toplam Araç</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="stat-number" id="availableVehicles">12</div>
+                    <div class="stat-label">Müsait Araç</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <div class="stat-number" id="totalBookings">0</div>
+                    <div class="stat-label">Toplam Rezervasyon</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <div class="stat-number" id="pendingBookings">0</div>
+                    <div class="stat-label">Bekleyen Rezervasyon</div>
+                </div>
+            </div>
+            
+            <div class="admin-content">
+                <!-- Araç Yönetimi -->
+                <div class="admin-card">
+                    <h3><i class="fas fa-car"></i> Araç Yönetimi</h3>
+                    <button id="addVehicleBtn" class="action-btn toggle-btn" style="margin-bottom: 20px;">
+                        <i class="fas fa-plus"></i> Yeni Araç Ekle
+                    </button>
+                    <div style="max-height: 400px; overflow-y: auto;">
+                        <table id="vehiclesTable">
+                            <thead>
+                                <tr>
+                                    <th>Araç Adı</th>
+                                    <th>Segment</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehiclesTableBody">
+                                <!-- Araçlar JavaScript ile eklenecek -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Rezervasyon Yönetimi -->
+                <div class="admin-card">
+                    <h3><i class="fas fa-calendar-alt"></i> Rezervasyonlar</h3>
+                    <div style="max-height: 400px; overflow-y: auto;">
+                        <table id="bookingsTable">
+                            <thead>
+                                <tr>
+                                    <th>Müşteri</th>
+                                    <th>Telefon</th>
+                                    <th>Tarih</th>
+                                    <th>Durum</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookingsTableBody">
+                                <!-- Rezervasyonlar JavaScript ile eklenecek -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Araç Ekleme/Değiştirme Formu -->
+                <div class="admin-card" id="vehicleForm" style="display: none;">
+                    <h3><i class="fas fa-edit"></i> Araç Bilgileri</h3>
+                    <form id="vehicleFormContent">
+                        <div class="form-group">
+                            <label for="vehicleName">Araç Adı *</label>
+                            <input type="text" id="vehicleName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleSegment">Segment *</label>
+                            <select id="vehicleSegment" required>
+                                <option value="ekonomik">Ekonomik</option>
+                                <option value="orta">Orta Segment</option>
+                                <option value="lüks">Lüks</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleTransmission">Vites Tipi *</label>
+                            <select id="vehicleTransmission" required>
+                                <option value="Otomatik">Otomatik</option>
+                                <option value="Manuel">Manuel</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleFuel">Yakıt Tipi *</label>
+                            <select id="vehicleFuel" required>
+                                <option value="Benzin">Benzin</option>
+                                <option value="Dizel">Dizel</option>
+                                <option value="Hibrit">Hibrit</option>
+                                <option value="Elektrik">Elektrik</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleYear">Model Yılı *</label>
+                            <input type="number" id="vehicleYear" min="2010" max="2024" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleFeatures">Özellikler (virgülle ayırın)</label>
+                            <input type="text" id="vehicleFeatures" placeholder="Klima, Bluetooth, Park Sensörü">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleStatus">Durum</label>
+                            <select id="vehicleStatus">
+                                <option value="true">Müsait</option>
+                                <option value="false">Kiralık</option>
+                            </select>
+                        </div>
+                        
+                        <input type="hidden" id="vehicleId">
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit" class="submit-btn" style="flex: 1;">
+                                <i class="fas fa-save"></i> Kaydet
+                            </button>
+                            <button type="button" id="cancelFormBtn" class="phone-button" style="flex: 1;">
+                                <i class="fas fa-times"></i> İptal
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="admin-card">
+                <h3><i class="fas fa-chart-bar"></i> Sistem Bilgileri</h3>
+                <p><strong>Son Güncelleme:</strong> <span id="lastUpdate"></span></p>
+                <p><strong>Toplam Rezervasyon:</strong> <span id="totalBookingsCount">0</span></p>
+                <p><strong>Aktif Araç:</strong> <span id="activeVehiclesCount">0</span></p>
+                <p><strong>Son Giriş:</strong> <span id="lastLogin"></span></p>
+                
+                <div style="margin-top: 20px;">
+                    <button id="exportDataBtn" class="action-btn edit-btn">
+                        <i class="fas fa-download"></i> Verileri Dışa Aktar
+                    </button>
+                    <button id="importDataBtn" class="action-btn toggle-btn" style="margin-left: 10px;">
+                        <i class="fas fa-upload"></i> Verileri İçe Aktar
+                    </button>
+                    <button id="resetDataBtn" class="logout-btn" style="margin-left: 10px;">
+                        <i class="fas fa-trash"></i> Verileri Sıfırla
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Admin paneli özel JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginScreen = document.getElementById('loginScreen');
+            const adminPanel = document.getElementById('adminPanel');
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            // Giriş kontrolü
+            const isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                loginScreen.style.display = 'none';
+                adminPanel.style.display = 'block';
+                loadAdminData();
+                updateLastLogin();
+            }
+            
+            // Giriş yap
+            loginBtn.addEventListener('click', function() {
+                const username = document.getElementById('adminUsername').value;
+                const password = document.getElementById('adminPassword').value;
+                
+                if (username === 'admin' && password === 'gur2023') {
+                    localStorage.setItem('adminLoggedIn', 'true');
+                    loginScreen.style.display = 'none';
+                    adminPanel.style.display = 'block';
+                    loadAdminData();
+                    updateLastLogin();
+                } else {
+                    alert('Kullanıcı adı veya şifre hatalı!');
+                }
+            });
+            
+            // Çıkış yap
+            logoutBtn.addEventListener('click', function() {
+                localStorage.removeItem('adminLoggedIn');
+                window.location.reload();
+            });
+            
+            // Enter tuşu ile giriş
+            document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loginBtn.click();
+                }
+            });
+            
+            function updateLastLogin() {
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('tr-TR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                if (document.getElementById('lastLogin')) {
+                    document.getElementById('lastLogin').textContent = dateStr;
+                }
+            }
+            
+            function loadAdminData() {
+                // Araçları yükle
+                loadVehicles();
+                // Rezervasyonları yükle
+                loadBookings();
+                // İstatistikleri güncelle
+                updateStats();
+                // Son güncelleme zamanını güncelle
+                updateLastUpdate();
+            }
+            
+            function loadVehicles() {
+                const vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
+                const tbody = document.getElementById('vehiclesTableBody');
+                tbody.innerHTML = '';
+                
+                vehicles.forEach(vehicle => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${vehicle.name}</td>
+                        <td>${vehicle.segment}</td>
+                        <td class="${vehicle.available ? 'status-available' : 'status-unavailable'}">
+                            ${vehicle.available ? 'Müsait' : 'Kiralık'}
+                        </td>
+                        <td>
+                            <button class="action-btn edit-btn" onclick="editVehicle(${vehicle.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn toggle-btn" onclick="toggleVehicleStatus(${vehicle.id})">
+                                <i class="fas fa-sync"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteVehicle(${vehicle.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+            
+            function loadBookings() {
+                const bookings = JSON.parse(localStorage.getItem('gurRentBookings') || '[]');
+                const tbody = document.getElementById('bookingsTableBody');
+                tbody.innerHTML = '';
+                
+                bookings.forEach((booking, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${booking.name}</td>
+                        <td>${booking.phone}</td>
+                        <td>${booking.pickupDate} - ${booking.returnDate}</td>
+                        <td>Beklemede</td>
+                        <td>
+                            <button class="action-btn edit-btn" onclick="viewBooking(${index})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteBooking(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+            
+            function updateStats() {
+                const vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
+                const bookings = JSON.parse(localStorage.getItem('gurRentBookings') || '[]');
+                
+                const availableVehicles = vehicles.filter(v => v.available).length;
+                const pendingBookings = bookings.length;
+                
+                document.getElementById('totalVehicles').textContent = vehicles.length;
+                document.getElementById('availableVehicles').textContent = availableVehicles;
+                document.getElementById('totalBookings').textContent = bookings.length;
+                document.getElementById('pendingBookings').textContent = pendingBookings;
+                document.getElementById('totalBookingsCount').textContent = bookings.length;
+                document.getElementById('activeVehiclesCount').textContent = availableVehicles;
+            }
+            
+            function updateLastUpdate() {
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('tr-TR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                document.getElementById('lastUpdate').textContent = dateStr;
+            }
+            
+            // Global fonksiyonlar
+            window.editVehicle = function(id) {
+                const vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
+                const vehicle = vehicles.find(v => v.id === id);
+                
+                if (vehicle) {
+                    document.getElementById('vehicleName').value = vehicle.name;
+                    document.getElementById('vehicleSegment').value = vehicle.segment;
+                    document.getElementById('vehicleTransmission').value = vehicle.transmission;
+                    document.getElementById('vehicleFuel').value = vehicle.fuel;
+                    document.getElementById('vehicleYear').value = vehicle.year;
+                    document.getElementById('vehicleFeatures').value = vehicle.features.join(', ');
+                    document.getElementById('vehicleStatus').value = vehicle.available;
+                    document.getElementById('vehicleId').value = id;
+                    
+                    document.getElementById('vehicleForm').style.display = 'block';
+                    document.getElementById('addVehicleBtn').style.display = 'none';
+                    
+                    // Formu görünür yap
+                    document.getElementById('vehicleForm').scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+            
+            window.toggleVehicleStatus = function(id) {
+                const vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
+                const vehicleIndex = vehicles.findIndex(v => v.id === id);
+                
+                if (vehicleIndex !== -1) {
+                    vehicles[vehicleIndex].available = !vehicles[vehicleIndex].available;
+                    localStorage.setItem('gurRentVehicles', JSON.stringify(vehicles));
+                    loadVehicles();
+                    updateStats();
+                    alert('Araç durumu güncellendi!');
+                }
+            };
+            
+            window.deleteVehicle = function(id) {
+                if (confirm('Bu aracı silmek istediğinize emin misiniz?')) {
+                    let vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
+                    vehicles = vehicles.filter(v => v.id !== id);
+                    localStorage.setItem('gurRentVehicles', JSON.stringify(vehicles));
+                    loadVehicles();
+                    updateStats();
+                    alert('Araç silindi!');
+                }
+            };
+            
+            window.viewBooking = function(index) {
+                const bookings = JSON.parse(localStorage.getItem('gurRentBookings') || '[]');
+                const booking = bookings[index];
+                
+                const details = `
+                    Müşteri: ${booking.name}
+                    Telefon: ${booking.phone}
+                    E-posta: ${booking.email || 'Belirtilmemiş'}
+                    Araç: ${booking.vehicle || 'Belirtilmemiş'}
+                    Tarih: ${booking.pickupDate} - ${booking.returnDate}
+                    Not: ${booking.message || 'Yok'}
+                    Talep Tarihi: ${booking.date}
+                `;
+                
+                alert(details);
+            };
+            
+            window.deleteBooking = function(index) {
+                if (confirm('Bu rezervasyonu silmek istediğinize emin misiniz?')) {
+                    const bookings = JSON.parse(localStorage.getItem('gurRentBookings') || '[]');
+                    bookings.splice(index, 1);
+                    localStorage.setItem('gurRentBookings', JSON.stringify(bookings));
+                    loadBookings();
+                    updateStats();
+                    alert('Rezervasyon silindi!');
+                }
+            };
+            
+            // Araç ekleme butonu
+            document.getElementById('addVehicleBtn').addEventListener('click', function() {
+                document.getElementById('vehicleFormContent').reset();
+                document.getElementById('vehicleId').value = '';
+                document.getElementById('vehicleForm').style.display = 'block';
+                this.style.display = 'none';
+                document.getElementById('vehicleForm').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // İptal butonu
+            document.getElementById('cancelFormBtn').addEventListener('click', function() {
+                document.getElementById('vehicleForm').style.display = 'none';
+                document.getElementById('addVehicleBtn').style.display = 'block';
+            });
+            
+            // Araç formu gönderimi
+            document.getElementById('vehicleFormContent').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
+                const vehicleId = document.getElementById('vehicleId').value;
+                
+                const newVehicle = {
+                    id: vehicleId ? parseInt(vehicleId) : vehicles.length > 0 ? Math.max(...vehicles.map(v => v.id)) + 1 : 1,
+                    name: document.getElementById('vehicleName').value,
+                    segment: document.getElementById('vehicleSegment').value,
+                    transmission: document.getElementById('vehicleTransmission').value,
+                    fuel: document.getElementById('vehicleFuel').value,
+                    year: document.getElementById('vehicleYear').value,
+                    features: document.getElementById('vehicleFeatures').value.split(',').map(f => f.trim()).filter(f => f),
+                    available: document.getElementById('vehicleStatus').value === 'true',
+                    image: 'fa-car'
+                };
+                
+                if (vehicleId) {
+                    // Güncelleme
+                    const index = vehicles.findIndex(v => v.id === parseInt(vehicleId));
+                    if (index !== -1) {
+                        vehicles[index] = newVehicle;
+                    }
+                } else {
+                    // Yeni ekleme
+                    vehicles.push(newVehicle);
+                }
+                
+                localStorage.setItem('gurRentVehicles', JSON.stringify(vehicles));
+                
+                // Formu kapat ve listeyi yenile
+                document.getElementById('vehicleForm').style.display = 'none';
+                document.getElementById('addVehicleBtn').style.display = 'block';
+                loadVehicles();
+                updateStats();
+                alert('Araç kaydedildi!');
+            });
+            
+            // Verileri dışa aktar
+            document.getElementById('exportDataBtn').addEventListener('click', function() {
+                const vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
+                const bookings = JSON.parse(localStorage.getItem('gurRentBookings') || '[]');
+                
+                const data = {
+                    vehicles: vehicles,
+                    bookings: bookings,
+                    exportDate: new Date().toISOString()
+                };
+                
+                const dataStr = JSON.stringify(data, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `gur-rent-data-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert('Veriler başarıyla dışa aktarıldı!');
+            });
+            
+            // Verileri içe aktar
+            document.getElementById('importDataBtn').addEventListener('click', function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                
+                input.onchange = function(e) {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        try {
+                            const data = JSON.parse(event.target.result);
+                            
+                            if (data.vehicles) {
+                                localStorage.setItem('gurRentVehicles', JSON.stringify(data.vehicles));
+                            }
+                            
+                            if (data.bookings) {
+                                localStorage.setItem('gurRentBookings', JSON.stringify(data.bookings));
+                            }
+                            
+                            loadAdminData();
+                            alert('Veriler başarıyla içe aktarıldı!');
+                        } catch (error) {
+                            alert('Dosya okunamadı! Lütfen geçerli bir JSON dosyası seçin.');
+                        }
+                    };
+                    
+                    reader.readAsText(file);
+                };
+                
+                input.click();
+            });
+            
+            // Verileri sıfırla
+            document.getElementById('resetDataBtn').addEventListener('click', function() {
+                if (confirm('TÜM verileri sıfırlamak istediğinize emin misiniz? Bu işlem geri alınamaz!')) {
+                    localStorage.removeItem('gurRentVehicles');
+                    localStorage.removeItem('gurRentBookings');
+                    loadAdminData();
+                    alert('Tüm veriler sıfırlandı!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
