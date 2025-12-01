@@ -9,5 +9,181 @@
     "available": true,
     "features": ["Klima", "Bluetooth", "Park Sensörü", "USB"],
     "image": "fa-car"
+  },
+  {
+    "id": 2,
+    "name": "Ford Fiesta",
+    "segment": "ekonomik",
+    "transmission": "Manuel",
+    "fuel": "Benzin",
+    "year": "2021",
+    "available": true,
+    "features": ["Klima", "USB", "ABS"],
+    "image": "fa-car"
+  },
+  {
+    "id": 3,
+    "name": "Peugeot 301",
+    "segment": "ekonomik",
+    "transmission": "Manuel",
+    "fuel": "Dizel",
+    "year": "2021",
+    "available": false,
+    "features": ["Klima", "Cruise Control", "Yol Bilgisayarı"],
+    "image": "fa-car"
+  },
+  {
+    "id": 4,
+    "name": "Citroen C-Elysee",
+    "segment": "ekonomik",
+    "transmission": "Otomatik",
+    "fuel": "Benzin",
+    "year": "2022",
+    "available": true,
+    "features": ["Klima", "Android Auto", "Park Sensörü"],
+    "image": "fa-car"
+  },
+  {
+    "id": 5,
+    "name": "Fiat Egea",
+    "segment": "orta",
+    "transmission": "Otomatik",
+    "fuel": "Dizel",
+    "year": "2023",
+    "available": true,
+    "features": ["Klima", "Yol Bilgisayarı", "Park Sensörü", "Start-Stop"],
+    "image": "fa-car-side"
+  },
+  {
+    "id": 6,
+    "name": "Renault Clio",
+    "segment": "ekonomik",
+    "transmission": "Otomatik",
+    "fuel": "Benzin",
+    "year": "2022",
+    "available": true,
+    "features": ["Klima", "Bluetooth", "USB"],
+    "image": "fa-car"
+  },
+  {
+    "id": 7,
+    "name": "Toyota Corolla",
+    "segment": "orta",
+    "transmission": "Otomatik",
+    "fuel": "Hibrit",
+    "year": "2023",
+    "available": true,
+    "features": ["Klima", "Apple CarPlay", "Kameralı Park", "Hız Sabitleyici"],
+    "image": "fa-car-side"
+  },
+  {
+    "id": 8,
+    "name": "Volkswagen Polo",
+    "segment": "ekonomik",
+    "transmission": "Manuel",
+    "fuel": "Benzin",
+    "year": "2022",
+    "available": false,
+    "features": ["Klima", "USB", "ABS", "ESP"],
+    "image": "fa-car"
+  },
+  {
+    "id": 9,
+    "name": "Opel Astra",
+    "segment": "orta",
+    "transmission": "Otomatik",
+    "fuel": "Dizel",
+    "year": "2022",
+    "available": true,
+    "features": ["Klima", "Isıtmalı Koltuk", "Yol Bilgisayarı"],
+    "image": "fa-car-side"
+  },
+  {
+    "id": 10,
+    "name": "Hyundai i20",
+    "segment": "ekonomik",
+    "transmission": "Otomatik",
+    "fuel": "Benzin",
+    "year": "2023",
+    "available": true,
+    "features": ["Klima", "Bluetooth", "Arkadan Kamera"],
+    "image": "fa-car"
+  },
+  {
+    "id": 11,
+    "name": "BMW 3.20",
+    "segment": "lüks",
+    "transmission": "Otomatik",
+    "fuel": "Benzin",
+    "year": "2022",
+    "available": true,
+    "features": ["Klima", "Navigasyon", "Deri Koltuk", "Panoramik Tavan"],
+    "image": "fa-car"
+  },
+  {
+    "id": 12,
+    "name": "Mercedes C200",
+    "segment": "lüks",
+    "transmission": "Otomatik",
+    "fuel": "Dizel",
+    "year": "2021",
+    "available": false,
+    "features": ["Klima", "Panoramik Tavan", "Memory Koltuk", "Adaptive Cruise"],
+    "image": "fa-car"
+  },
+  {
+    "id": 13,
+    "name": "Audi A3",
+    "segment": "lüks",
+    "transmission": "Otomatik",
+    "fuel": "Benzin",
+    "year": "2023",
+    "available": true,
+    "features": ["Klima", "Virtual Cockpit", "LED Farlar", "Bang & Olufsen Ses"],
+    "image": "fa-car"
+  },
+  {
+    "id": 14,
+    "name": "Volvo S60",
+    "segment": "lüks",
+    "transmission": "Otomatik",
+    "fuel": "Dizel",
+    "year": "2022",
+    "available": true,
+    "features": ["Klima", "Pilot Assist", "Premium Ses", "Isıtmalı Direksiyon"],
+    "image": "fa-car"
+  },
+  {
+    "id": 15,
+    "name": "Skoda Octavia",
+    "segment": "orta",
+    "transmission": "Otomatik",
+    "fuel": "Dizel",
+    "year": "2023",
+    "available": true,
+    "features": ["Klima", "Yol Bilgisayarı", "Park Sensörü", "Start-Stop"],
+    "image": "fa-car-side"
+  },
+  {
+    "id": 16,
+    "name": "Honda Civic",
+    "segment": "orta",
+    "transmission": "Otomatik",
+    "fuel": "Benzin",
+    "year": "2022",
+    "available": false,
+    "features": ["Klima", "Honda Sensing", "Lane Assist", "Adaptive Cruise"],
+    "image": "fa-car-side"
+  },
+  {
+    "id": 17,
+    "name": "Nissan Qashqai",
+    "segment": "orta",
+    "transmission": "Otomatik",
+    "fuel": "Dizel",
+    "year": "2023",
+    "available": true,
+    "features": ["Klima", "360 Kamera", "Otomatik Bagaj", "Yolculuk Bilgisayarı"],
+    "image": "fa-truck-pickup"
   }
 ]

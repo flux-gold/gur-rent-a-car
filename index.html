@@ -10,45 +10,47 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
 </head>
 <body>
     <!-- WhatsApp Butonu -->
-    <a href="https://wa.me/905449709712" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/905449709712" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- Header ve Navigasyon -->
+    <!-- Header -->
     <header>
         <div class="container header-container">
             <div class="logo">
                 <h1>GÜR RENT A CAR</h1>
                 <p>Kiralamanın hızlı ve kolay yolu</p>
             </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menü">
                 <i class="fas fa-bars"></i>
             </button>
             <nav id="mainNav">
                 <ul>
-                    <li><a href="#home" class="active">Ana Sayfa</a></li>
-                    <li><a href="#vehicles">Araçlarımız</a></li>
-                    <li><a href="#booking">Hızlı Rezervasyon</a></li>
-                    <li><a href="#why-us">Neden Biz?</a></li>
-                    <li><a href="#testimonials">Yorumlar</a></li>
-                    <li><a href="#social">Sosyal Medya</a></li>
-                    <li><a href="#contact">İletişim</a></li>
-                    <li><a href="admin.html" class="admin-link"><i class="fas fa-lock"></i> Admin</a></li>
+                    <li><a href="#home" class="active"><i class="fas fa-home"></i> Ana Sayfa</a></li>
+                    <li><a href="#vehicles"><i class="fas fa-car"></i> Araçlarımız</a></li>
+                    <li><a href="#booking"><i class="fas fa-calendar-check"></i> Rezervasyon</a></li>
+                    <li><a href="#why-us"><i class="fas fa-star"></i> Neden Biz?</a></li>
+                    <li><a href="#testimonials"><i class="fas fa-comment"></i> Yorumlar</a></li>
+                    <li><a href="#contact"><i class="fas fa-phone"></i> İletişim</a></li>
+                    <li><a href="admin.html" class="admin-link" style="display: none;"><i class="fas fa-lock"></i> Admin</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Bölümü -->
+    <!-- Hero -->
     <section class="hero" id="home">
         <div class="container">
             <h2>Karaman'da Güvenilir Araç Kiralama</h2>
             <p>15+ ekonomik, orta ve lüks segment araçlarla 7/24 hizmetinizdeyiz. Havaalanı ve otogar servisimiz mevcuttur.</p>
             <div class="hero-buttons">
-                <a href="#booking" class="cta-button">Hemen Rezervasyon Yap</a>
+                <a href="#booking" class="cta-button"><i class="fas fa-calendar-plus"></i> Hemen Rezervasyon Yap</a>
                 <a href="tel:+905449709712" class="phone-button">
                     <i class="fas fa-phone-alt"></i> +90 544 970 9712
                 </a>
@@ -56,7 +58,7 @@
         </div>
     </section>
 
-    <!-- Hızlı Rezervasyon -->
+    <!-- Rezervasyon -->
     <section class="quick-booking" id="booking">
         <div class="container">
             <div class="section-title">
@@ -85,7 +87,6 @@
                         <label for="vehicle-select"><i class="fas fa-car"></i> Araç Seçimi</label>
                         <select id="vehicle-select" name="vehicle">
                             <option value="">Araç Seçin (Opsiyonel)</option>
-                            <!-- Araçlar JavaScript ile eklenecek -->
                         </select>
                     </div>
                 </div>
@@ -93,11 +94,11 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="pickup-date"><i class="fas fa-calendar-alt"></i> Alış Tarihi *</label>
-                        <input type="text" id="pickup-date" name="pickup-date" required class="datepicker" placeholder="GG/AA/YYYY">
+                        <input type="text" id="pickup-date" name="pickup-date" required class="datepicker" placeholder="GG.AA.YYYY">
                     </div>
                     <div class="form-group">
                         <label for="return-date"><i class="fas fa-calendar-check"></i> İade Tarihi *</label>
-                        <input type="text" id="return-date" name="return-date" required class="datepicker" placeholder="GG/AA/YYYY">
+                        <input type="text" id="return-date" name="return-date" required class="datepicker" placeholder="GG.AA.YYYY">
                     </div>
                 </div>
                 
@@ -116,7 +117,7 @@
         </div>
     </section>
 
-    <!-- Araçlar Bölümü -->
+    <!-- Araçlar -->
     <section class="vehicles" id="vehicles">
         <div class="container">
             <div class="section-title">
@@ -125,15 +126,18 @@
             </div>
             
             <div class="vehicle-filters">
-                <button class="filter-btn active" data-filter="all">Tüm Araçlar</button>
-                <button class="filter-btn" data-filter="ekonomik">Ekonomik</button>
-                <button class="filter-btn" data-filter="orta">Orta Segment</button>
-                <button class="filter-btn" data-filter="lüks">Lüks</button>
-                <button class="filter-btn" data-filter="available">Müsait Araçlar</button>
+                <button class="filter-btn active" data-filter="all"><i class="fas fa-car"></i> Tüm Araçlar</button>
+                <button class="filter-btn" data-filter="ekonomik"><i class="fas fa-money-bill-wave"></i> Ekonomik</button>
+                <button class="filter-btn" data-filter="orta"><i class="fas fa-car-side"></i> Orta Segment</button>
+                <button class="filter-btn" data-filter="lüks"><i class="fas fa-crown"></i> Lüks</button>
+                <button class="filter-btn" data-filter="available"><i class="fas fa-check-circle"></i> Müsait Araçlar</button>
             </div>
             
             <div class="vehicle-grid" id="vehicleList">
-                <!-- Araçlar JavaScript ile yüklenecek -->
+                <div class="loading-vehicles">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Araçlar yükleniyor...</p>
+                </div>
             </div>
             
             <div class="vehicle-stats">
@@ -149,7 +153,7 @@
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-users"></i>
-                    <h3>500+</h3>
+                    <h3>1000+</h3>
                     <p>Mutlu Müşteri</p>
                 </div>
                 <div class="stat-item">
@@ -161,7 +165,7 @@
         </div>
     </section>
 
-    <!-- Neden Biz Bölümü -->
+    <!-- Neden Biz -->
     <section class="why-us" id="why-us">
         <div class="container">
             <div class="section-title">
@@ -216,272 +220,159 @@
         </div>
     </section>
 
-    <!-- Müşteri Yorumları -->
-<!-- Yorumlar Bölümü -->
-<section class="testimonials" id="testimonials">
-    <div class="container">
-        <div class="section-title">
-            <h2>Müşteri Yorumları</h2>
-            <p class="section-subtitle">1000+ mutlu müşterimizin deneyimleri</p>
-        </div>
-        
-        <div class="testimonial-grid">
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"Tıkır tıkır işleyen sistemleri var, Karaman'da araç kiralayacaksanız kesinlikle tavsiye ederim."</p>
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">F</div>
-                    <div class="author-info">
-                        <h4>Fatih P.</h4>
-                        <p>İş Adamı</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
+    <!-- Yorumlar -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Müşteri Yorumları</h2>
+                <p class="section-subtitle">1000+ mutlu müşterimizin deneyimleri</p>
             </div>
             
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"Aldığımız araç çok temiz ve bakımlıydı, fiyat performans açısından çok iyi. Tekrar tercih edeceğim."</p>
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">S</div>
-                    <div class="author-info">
-                        <h4>Salih K.</h4>
-                        <p>Öğretmen</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
+            <div class="testimonial-slider-container">
+                <div class="testimonial-slider" id="testimonialSlider">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Tıkır tıkır işleyen sistemleri var, Karaman'da araç kiralayacaksanız kesinlikle tavsiye ederim."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">F</div>
+                            <div class="author-info">
+                                <h4>Fatih P.</h4>
+                                <p>İş Adamı</p>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Aldığımız araç çok temiz ve bakımlıydı, fiyat performans açısından çok iyi. Tekrar tercih edeceğim."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">S</div>
+                            <div class="author-info">
+                                <h4>Salih K.</h4>
+                                <p>Öğretmen</p>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Firma çok ilgili ve profesyonel, biz tatil için kiraladık, herşey çok güzeldi, memnun kaldık."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">M</div>
+                            <div class="author-info">
+                                <h4>Melike A.</h4>
+                                <p>Doktor</p>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Karaman'a geldiğimde hep Gür Rent A Car'dan kiralıyorum. Hem uygun fiyatlı hem de araçları temiz."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">A</div>
+                            <div class="author-info">
+                                <h4>Ahmet Y.</h4>
+                                <p>İş Seyahati</p>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ek yorumlar -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"7/24 destek hizmeti harika! Gece yarısı bir sorun olduğunda bile hemen çözüm buldular."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">E</div>
+                            <div class="author-info">
+                                <h4>Emre D.</h4>
+                                <p>İş Seyahati</p>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Araçlar her zaman temiz ve bakımlı. Fiyatları da çok uygun. Karaman'da tek tercihim."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">C</div>
+                            <div class="author-info">
+                                <h4>Cemal T.</h4>
+                                <p>Serbest Meslek</p>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"Firma çok ilgili ve profesyonel, biz tatil için kiraladık, herşey çok güzeldi, memnun kaldık."</p>
+                
+                <div class="slider-controls">
+                    <button class="slider-btn prev-btn" aria-label="Önceki yorum">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="slider-btn next-btn" aria-label="Sonraki yorum">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">M</div>
-                    <div class="author-info">
-                        <h4>Melike A.</h4>
-                        <p>Doktor</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Yeni yorumlar -->
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"Karaman'a geldiğimde hep Gür Rent A Car'dan kiralıyorum. Hem uygun fiyatlı hem de araçları temiz."</p>
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">A</div>
-                    <div class="author-info">
-                        <h4>Ahmet Y.</h4>
-                        <p>İş Seyahati</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"7/24 hizmet vermeleri çok iyi. Gece geç saatte bile arayıp araç bulabiliyorsunuz."</p>
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">E</div>
-                    <div class="author-info">
-                        <h4>Emre D.</h4>
-                        <p>Acil İhtiyaç</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"Araç teslimi ve iadesi çok pratik. Tüm evraklar hazır, zaman kaybı yaşamıyorsunuz."</p>
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">K</div>
-                    <div class="author-info">
-                        <h4>Kemal T.</h4>
-                        <p>Ticari Müşteri</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"Fiyatları çok uygun, özellikle uzun dönem kiralamada çok avantajlılar."</p>
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">N</div>
-                    <div class="author-info">
-                        <h4>Nurcan B.</h4>
-                        <p>1 Aylık Kiralama</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"Aracım bozuldu, acil ihtiyaç için aradım. 30 dakikada araç getirdiler. Teşekkürler!"</p>
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">C</div>
-                    <div class="author-info">
-                        <h4>Cemil Ş.</h4>
-                        <p>Acil Servis</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"Havaalanından teslim aldım, çok profesyonel bir hizmet. Karaman'da ilk tercihim artık."</p>
-                </div>
-                    <div class="testimonial-author">
-                    <div class="author-avatar">H</div>
-                    <div class="author-info">
-                        <h4>Hakan M.</h4>
-                        <p>Yurt Dışı Gelisi</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"Geniş araç seçeneği var. İhtiyacıma göre her zaman uygun bir araç bulabiliyorum."</p>
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">B</div>
-                    <div class="author-info">
-                        <h4>Burak K.</h4>
-                        <p>Düzenli Müşteri</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-card">
-                <div class="testimonial-content">
-                    <p>"Çocuklu aile için uygun, temiz ve güvenli araçlar. Ailece kullanıyoruz, çok memnunuz."</p>
-                </div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">Z</div>
-                    <div class="author-info">
-                        <h4>Zeynep A.</h4>
-                        <p>Aile Müşterisi</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
+                
+                <div class="slider-dots" id="sliderDots"></div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Sosyal Medya -->
-<!-- Sosyal Medya -->
-<section class="social-media" id="social">
-    <div class="container">
-        <div class="section-title">
-            <h2>Sosyal Medya</h2>
-            <p class="section-subtitle">Bizi takip edin, kampanyalardan haberdar olun</p>
-        </div>
-        
-        <div class="social-grid">
-            <a href="https://instagram.com/gurrentacar" class="social-card instagram" target="_blank">
-                <div class="social-icon">
-                    <i class="fab fa-instagram"></i>
-                </div>
-                <h3>Instagram</h3>
-                <p>@gurrentacar</p>
-                <span class="social-link">Takip Et <i class="fas fa-arrow-right"></i></span>
-            </a>
+    <section class="social-media" id="social">
+        <div class="container">
+            <div class="section-title">
+                <h2>Sosyal Medya</h2>
+                <p class="section-subtitle">Bizi takip edin, kampanyalardan haberdar olun</p>
+            </div>
             
-            <a href="https://wa.me/905449709712" class="social-card whatsapp" target="_blank">
-                <div class="social-icon">
-                    <i class="fab fa-whatsapp"></i>
-                </div>
-                <h3>WhatsApp</h3>
-                <p>+90 544 970 9712</p>
-                <span class="social-link">Mesaj Gönder <i class="fas fa-arrow-right"></i></span>
-            </a>
+            <div class="social-grid">
+                <a href="https://instagram.com/gurrentacar" class="social-card instagram" target="_blank">
+                    <div class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3>Instagram</h3>
+                    <p>@gurrentacar</p>
+                    <span class="social-link">Takip Et <i class="fas fa-arrow-right"></i></span>
+                </a>
+                
+                <a href="https://wa.me/905449709712" class="social-card whatsapp" target="_blank">
+                    <div class="social-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp</h3>
+                    <p>+90 544 970 9712</p>
+                    <span class="social-link">Mesaj Gönder <i class="fas fa-arrow-right"></i></span>
+                </a>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-    <!-- Google Haritalar -->
+    <!-- Harita -->
     <section class="map-section" id="map">
         <div class="container">
             <div class="section-title">
@@ -496,8 +387,7 @@
                         <p><strong>Adres:</strong> Külhan Mh. 2. İstasyon Cd. No:29/E Merkez/Karaman</p>
                         <p><strong>Telefon:</strong> +90 544 970 9712</p>
                         <p><strong>Çalışma Saatleri:</strong> 08:00 - 22:00 (7/24 Acil Destek)</p>
-                        <a href="https://maps.google.com/?q=Külhan+Mahallesi+2.+İstasyon+Caddesi+Karaman" 
-                           class="map-btn" target="_blank">
+                        <a href="https://maps.google.com/?q=Külhan+Mahallesi+2.+İstasyon+Caddesi+Karaman" class="map-btn" target="_blank">
                            <i class="fas fa-directions"></i> Yol Tarifi Al
                         </a>
                     </div>
@@ -532,8 +422,8 @@
                         </div>
                         <div class="contact-details">
                             <h3>Telefon</h3>
-                            <p>+90 544 970 9712</p>
-                            <p>+90 541 242 7267</p>
+                            <p><a href="tel:+905449709712">+90 544 970 9712</a></p>
+                            <p><a href="tel:+905412427267">+90 541 242 7267</a></p>
                         </div>
                     </div>
                     
@@ -543,7 +433,7 @@
                         </div>
                         <div class="contact-details">
                             <h3>WhatsApp</h3>
-                            <p>+90 544 970 9712</p>
+                            <p><a href="https://wa.me/905449709712">+90 544 970 9712</a></p>
                             <p>7/24 Canlı Destek</p>
                         </div>
                     </div>
@@ -554,7 +444,7 @@
                         </div>
                         <div class="contact-details">
                             <h3>Instagram</h3>
-                            <p>@gurrentacar</p>
+                            <p><a href="https://instagram.com/gurrentacar" target="_blank">@gurrentacar</a></p>
                         </div>
                     </div>
                     
@@ -584,56 +474,59 @@
     </section>
 
     <!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <div class="footer-logo">
-                    <h2>GÜR RENT A CAR</h2>
-                    <p>Bir Ahmet GÜR kuruluşudur.</p>
-                    <p style="margin-top: 10px; font-size: 12px; color: var(--gold-light);">
-                        Reklam ve Tasarım: <span style="color: var(--gold-primary);">huseyinelaldi7</span>
-                    </p>
-                </div>
-                <div class="footer-social">
-                    <a href="https://instagram.com/gurrentacar" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/905449709712" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Hızlı Bağlantılar</h3>
-                <ul>
-                    <li><a href="#home">Ana Sayfa</a></li>
-                    <li><a href="#vehicles">Araçlarımız</a></li>
-                    <li><a href="#booking">Hızlı Rezervasyon</a></li>
-                    <li><a href="#why-us">Neden Biz?</a></li>
-                    <li><a href="#contact">İletişim</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>İletişim Bilgileri</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Külhan Mh. 2. İstasyon Cd. No:29/E Merkez/Karaman</p>
-                <p><i class="fas fa-phone-alt" style="color: var(--gold-primary);"></i> <a href="tel:+905449709712" style="color: var(--gold-primary);">+90 544 970 9712</a></p>
-                <p><i class="fas fa-phone-alt" style="color: var(--gold-primary);"></i> <a href="tel:+905412427267" style="color: var(--gold-primary);">+90 541 242 7267</a></p>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Hakkımızda</h3>
-                <p>Gür Rent A Car 2015 yılında Karaman'da kurulmuş olup, 15 ve üzeri ekonomik, orta ve lüks araç filosuyla Karaman'da kiralık araç hizmeti vermektedir.</p>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>Copyright © 2025 Gür Rent A Car - Her Hakkı Saklıdır</p>
-            <p>Kopyalanması, çoğaltılması ve dağıtılması halinde yasal haklarımız işletilecektir.</p>
-        </div>
-    </div>
-</footer>
-
-<!-- Yukarı Çık Butonu -->
-<div class="back-to-top" id="backToTop">
-    <i class="fas fa-chevron-up"></i>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <h2>GÜR RENT A CAR</h2>
+                        <p>Bir Ahmet GÜR kuruluşudur.</p>
+                        <p class="designer-credit">
+                            Reklam ve Tasarım: <span>huseyinelaldi7</span>
+                        </p>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://instagram.com/gurrentacar" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/905449709712" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
 </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Hızlı Bağlantılar</h3>
+                    <ul>
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Ana Sayfa</a></li>
+                        <li><a href="#vehicles"><i class="fas fa-chevron-right"></i> Araçlarımız</a></li>
+                        <li><a href="#booking"><i class="fas fa-chevron-right"></i> Hızlı Rezervasyon</a></li>
+                        <li><a href="#why-us"><i class="fas fa-chevron-right"></i> Neden Biz?</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> İletişim</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>İletişim Bilgileri</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Külhan Mh. 2. İstasyon Cd. No:29/E Merkez/Karaman</p>
+                    <p><i class="fas fa-phone-alt"></i> <a href="tel:+905449709712">+90 544 970 9712</a></p>
+                    <p><i class="fas fa-phone-alt"></i> <a href="tel:+905412427267">+90 541 242 7267</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Hakkımızda</h3>
+                    <p>Gür Rent A Car 2015 yılında Karaman'da kurulmuş olup, 15 ve üzeri ekonomik, orta ve lüks araç filosuyla Karaman'da kiralık araç hizmeti vermektedir.</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Copyright © 2025 Gür Rent A Car - Her Hakkı Saklıdır</p>
+                <p>Kopyalanması, çoğaltılması ve dağıtılması halinde yasal haklarımız işletilecektir.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Yukarı Çık -->
+    <div class="back-to-top" id="backToTop" aria-label="Yukarı Çık">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
