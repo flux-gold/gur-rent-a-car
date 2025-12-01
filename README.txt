@@ -1,94 +1,48 @@
 # Gür Rent A Car - Araç Kiralama Websitesi
 
-![Gür Rent A Car Logo](assets/images/logo.png)
+Bir Ahmet GÜR kuruluşudur.
 
-Karaman'da profesyonel araç kiralama hizmeti sunan Gür Rent A Car'ın modern web sitesi.
+## ✨ YENİ ÖZELLİKLER
 
-## 🌐 Canlı Demo
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://kullaniciadiniz.github.io/gur-rent-a-car/)
+### 1. Gelişmiş Admin Paneli
+- ✅ Rezervasyon Kabul/Red sistemi
+- ✅ WhatsApp bildirim otomasyonu
+- ✅ Şifre değiştirme özelliği
+- ✅ Detaylı araç yönetimi
 
-## ✨ Özellikler
+### 2. Tasarım İyileştirmeleri
+- ✅ Telefon numaraları altın renginde
+- ✅ Facebook ve Twitter kaldırıldı
+- ✅ 12 müşteri yorumu eklendi
+- ✅ "huseyinelaldi7" tasarım kredisi eklendi
+- ✅ Copyright 2025 olarak güncellendi
 
-- ✅ Modern ve Responsive Tasarım
-- ✅ Anlık Araç Müsaitlik Kontrolü
-- ✅ Admin Paneli (Araç Yönetimi)
-- ✅ Hızlı Rezervasyon Sistemi
-- ✅ Sosyal Medya Entegrasyonu
-- ✅ Google Haritalar
-- ✅ WhatsApp İletişim
-- ✅ LocalStorage Veritabanı
+### 3. Kullanıcı Deneyimi
+- ✅ Tek tıkla yukarı çık butonu
+- ✅ Admin paneli ana sayfada gizli
+- ✅ Mobil uyumluluk iyileştirmeleri
+- ✅ Form butonları düzeltildi
 
-## 🚀 Hızlı Başlangıç
+## 🔐 ADMIN PANEL ERİŞİMİ
 
-1. **index.html** dosyasını tarayıcıda açın
-2. Site otomatik çalışacaktır
-3. Admin paneline erişmek için:
-   - Site açıkken klavyeden **"GÜR"** yazın
-   - Sağ üstte admin linki görünecek
-   - Kullanıcı: `admin`, Şifre: `gur2023`
+Admin paneline direkt olarak erişim:https://flux-gold.github.io/gur-rent-a-car/admin.html
 
-## 📁 Proje Yapısı
+Varsayılan Giriş Bilgileri:
+- **Kullanıcı Adı:** admin
+- **Şifre:** gur2023
 
-```
-gur-rent-a-car/
-├── index.html          # Ana sayfa
-├── admin.html          # Admin paneli
-├── style.css           # Stil dosyası
-├── script.js           # JavaScript dosyası
-├── bookings.json       # Rezervasyon veritabanı
-├── vehicles.json       # Araç veritabanı
-├── README.md           # Bu dosya
-└── assets/             # Resimler ve ikonlar
-    └── images/
-        └── logo.png
-```
+**Önemli:** Şifreyi admin panelinden değiştirebilirsiniz.
 
-## 🔧 Yapılandırma
+## 📞 İLETİŞİM
 
-### İletişim Bilgilerini Değiştirme
-`index.html` dosyasında iletişim bölümünü bulun ve şu bilgileri güncelleyin:
-- Telefon: `+90 544 970 9712`
-- Adres: `Külhan Mh. 2. İstasyon Cd. No:29/E Merkez/Karaman`
-- Sosyal medya linkleri
+- **Telefon:** +90 544 970 9712
+- **WhatsApp:** +90 544 970 9712  
+- **Instagram:** @gurrentacar
+- **Adres:** Külhan Mh. 2. İstasyon Cd. No:29/E Merkez/Karaman
 
-### Araçları Düzenleme
-1. `admin.html` dosyasına giriş yapın
-2. Araç Yönetimi bölümünden düzenleyin
-3. Veya `script.js` dosyasındaki `defaultVehicles` dizisini düzenleyin
+## © TELİF HAKKI
 
-## 🎨 Tasarım
+Copyright © 2025 Gür Rent A Car - Her Hakkı Saklıdır.
+Kopyalanması, çoğaltılması ve dağıtılması halinde yasal haklarımız işletilecektir.
 
-- **Renk Paleti:** #0F0F0F, #1A1A1A, #F0C037, #E8B225, #FFFFFF
-- **Fontlar:** Poppins, Roboto
-- **Responsive:** Mobil, Tablet, Masaüstü uyumlu
-
-## 📱 Teknolojiler
-
-- HTML5
-- CSS3 (Flexbox, Grid)
-- JavaScript (ES6+)
-- LocalStorage API
-- Flatpickr (Tarih seçici)
-- Font Awesome (İkonlar)
-
-## 🤝 Katkıda Bulunma
-
-1. Fork edin
-2. Feature branch oluşturun (`git checkout -b feature/AmazingFeature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add AmazingFeature'`)
-4. Branch'inizi push edin (`git push origin feature/AmazingFeature`)
-5. Pull Request açın
-
-## 📞 İletişim
-
-Gür Rent A Car - [@gurrentacar](https://instagram.com/gurrentacar)  
-Telefon: +90 544 970 9712  
-Adres: Külhan Mh. 2. İstasyon Cd. No:29/E Merkez/Karaman
-
-## 📄 Lisans
-
-Bu proje Gür Rent A Car'a aittir. Tüm hakları saklıdır.
-
----
-
-⭐️ [GitHub'da bizi yıldızlayın](https://github.com/KULLANICIADI/gur-rent-a-car)
+**Reklam ve Tasarım:** huseyinelaldi7

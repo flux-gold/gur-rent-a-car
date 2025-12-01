@@ -772,3 +772,54 @@ document.addEventListener('DOMContentLoaded', function() {
     Web sitesi başarıyla yüklendi!
     `);
 });
+// ===== YUKARI ÇIK BUTONU =====
+const backToTopBtn = document.getElementById('backToTop');
+if (backToTopBtn) {
+    // Scroll ile butonu göster/gizle
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopBtn.style.display = 'flex';
+        } else {
+            backToTopBtn.style.display = 'none';
+        }
+    });
+    
+    // Butona tıklayınca en üste çık
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+// ===== ADMIN PANELİ LİNKİNİ GİZLE =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Ana sayfada admin linkini gizle
+    if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
+        const adminLinks = document.querySelectorAll('a[href="admin.html"], a[href="/admin.html"]');
+        adminLinks.forEach(link => {
+            link.style.display = 'none';
+        });
+    }
+});
+
+// ===== MUTLU MÜŞTERİ SAYISINI GÜNCELLE =====
+document.addEventListener('DOMContentLoaded', function() {
+    const happyCustomerStat = document.querySelector('.vehicle-stats .stat-item:nth-child(3) h3');
+    if (happyCustomerStat) {
+        happyCustomerStat.textContent = '1000+';
+    }
+});
+
+// ===== WHATSAPP BUTONU GÜNCELLEMESİ =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Mevcut WhatsApp butonunu bul
+    const whatsappBtn = document.querySelector('.whatsapp-float');
+    if (whatsappBtn) {
+        whatsappBtn.style.backgroundColor = '#25D366';
+        whatsappBtn.addEventListener('mouseover', function() {
+            this.style.backgroundColor = '#128C7E';
+        });
+        whatsappBtn.addEventListener('mouseout', function() {
+            this.style.backgroundColor = '#25D366';
+        });
+    }
+});

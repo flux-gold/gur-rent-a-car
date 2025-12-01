@@ -1377,3 +1377,161 @@ footer {
     background-color: var(--gold-primary);
     color: var(--black-dark);
 }
+/* ===== YUKARI ÇIK BUTONU ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--gold-primary);
+    color: var(--black-dark);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 999;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(240, 192, 55, 0.3);
+    border: 2px solid transparent;
+}
+
+.back-to-top:hover {
+    background-color: var(--gold-secondary);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(240, 192, 55, 0.4);
+    border-color: var(--white);
+}
+
+/* ===== TELEFON NUMARALARI STİLİ ===== */
+.footer-section a[href^="tel:"] {
+    color: var(--gold-primary) !important;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section a[href^="tel:"]:hover {
+    color: var(--gold-light) !important;
+}
+
+.contact-item a[href^="tel:"] {
+    color: var(--gold-primary) !important;
+}
+
+.contact-item a[href^="tel:"]:hover {
+    color: var(--gold-light) !important;
+}
+
+/* ===== FOOTER BOTTOM GÜNCELLEMESİ ===== */
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(240, 192, 55, 0.2);
+    color: var(--gray);
+    font-size: 14px;
+    margin-top: 30px;
+}
+
+.footer-bottom p:first-child {
+    color: var(--gold-primary);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.footer-bottom p:last-child {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+/* ===== SOSYAL MEDYA KART GÜNCELLEMESİ ===== */
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ===== YORUM KARTI GÜNCELLEMESİ ===== */
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.testimonial-card {
+    background-color: var(--black-dark);
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 4px solid var(--gold-primary);
+    transition: all 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== HAKKIMIZDA GÜNCELLEMESİ ===== */
+.hero + .quick-booking {
+    margin-top: 0;
+}
+
+/* ===== ADMIN PANEL LİNKİ GİZLEME ===== */
+nav ul li a[href="admin.html"] {
+    display: none;
+}
+
+/* ===== MUTLU MÜŞTERİ İSTATİSTİĞİ GÜNCELLEMESİ ===== */
+.vehicle-stats .stat-item:nth-child(3) h3 {
+    color: var(--gold-primary);
+}
+
+/* ===== RESPONSIVE GÜNCELLEMELER ===== */
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 80px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .social-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== HUSEYİN EL ALDİ7 STİLİ ===== */
+.huseyin-badge {
+    color: var(--gold-primary);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+/* ===== ADMIN PANEL BUTON DÜZENLEMESİ ===== */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.action-buttons button {
+    flex: 1;
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* ===== WHATSAPP BUTON RENK UYUMU ===== */
+.whatsapp-float {
+    background-color: #25D366;
+}
+
+.whatsapp-float:hover {
+    background-color: #128C7E;
+}

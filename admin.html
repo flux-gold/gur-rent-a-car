@@ -134,6 +134,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            font-size: 14px;
         }
         
         th, td {
@@ -151,6 +152,21 @@
             background: #2a2a2a;
         }
         
+        .status-pending {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        .status-approved {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .status-rejected {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
         .status-available {
             color: #28a745;
             font-weight: bold;
@@ -162,11 +178,12 @@
         }
         
         .action-btn {
-            padding: 5px 10px;
+            padding: 6px 12px;
             border: none;
-            border-radius: 3px;
+            border-radius: 4px;
             cursor: pointer;
-            margin-right: 5px;
+            margin: 2px;
+            font-size: 12px;
         }
         
         .edit-btn {
@@ -181,6 +198,16 @@
         
         .toggle-btn {
             background: #28a745;
+            color: white;
+        }
+        
+        .approve-btn {
+            background: #28a745;
+            color: white;
+        }
+        
+        .reject-btn {
+            background: #dc3545;
             color: white;
         }
         
@@ -220,36 +247,164 @@
             font-size: 50px;
             color: #555;
         }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .action-buttons button {
+            flex: 1;
+        }
+        
+        .rejection-reason {
+            background: #2a2a2a;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 3px solid #dc3545;
+        }
+        
+        .change-password-btn {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .password-form {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: #1A1A1A;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            border: 2px solid #F0C037;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .modal-actions button {
+            flex: 1;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: #F0C037;
+            color: #0F0F0F;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1000;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(240, 192, 55, 0.3);
+        }
+        
+        .back-to-top:hover {
+            background: #E8B225;
+            transform: translateY(-5px);
+        }
     </style>
 </head>
 <body>
+    <!-- Yukarı Çık Butonu -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+    
     <div class="admin-container" id="adminContainer">
         <!-- Admin Giriş Ekranı -->
         <div id="loginScreen" class="login-container">
             <h2 class="login-title"><i class="fas fa-lock"></i> Admin Girişi</h2>
             <div class="form-group">
                 <label for="adminUsername">Kullanıcı Adı</label>
-                <input type="text" id="adminUsername" placeholder="admin">
+                <input type="text" id="adminUsername" placeholder="Kullanıcı adınızı girin" autocomplete="off">
             </div>
             <div class="form-group">
                 <label for="adminPassword">Şifre</label>
-                <input type="password" id="adminPassword" placeholder="••••••••">
+                <input type="password" id="adminPassword" placeholder="Şifrenizi girin" autocomplete="off">
             </div>
             <button id="loginBtn" class="submit-btn" style="width: 100%;">
                 <i class="fas fa-sign-in-alt"></i> Giriş Yap
             </button>
-            <p style="text-align: center; margin-top: 20px; color: #999;">
-                Varsayılan: admin / gur2023
-            </p>
         </div>
         
-        <!-- Admin Paneli (Giriş yapılınca gösterilecek) -->
+        <!-- Admin Paneli -->
         <div id="adminPanel" style="display: none;">
             <div class="admin-header">
                 <h1 class="admin-title"><i class="fas fa-cog"></i> Gür Rent A Car Admin Paneli</h1>
                 <div class="admin-nav">
-                    <a href="index.html"><i class="fas fa-home"></i> Siteye Dön</a>
+                    <a href="/"><i class="fas fa-home"></i> Siteye Dön</a>
+                    <button class="change-password-btn" id="changePasswordBtn">
+                        <i class="fas fa-key"></i> Şifre Değiştir
+                    </button>
                     <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
+                </div>
+            </div>
+            
+            <!-- Şifre Değiştirme Formu -->
+            <div id="passwordForm" class="password-form">
+                <h3 style="color: #F0C037; margin-bottom: 20px;">Şifre Değiştir</h3>
+                <div class="form-group">
+                    <label for="currentPassword">Mevcut Şifre</label>
+                    <input type="password" id="currentPassword" placeholder="Mevcut şifreniz">
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Yeni Şifre</label>
+                    <input type="password" id="newPassword" placeholder="Yeni şifre (min. 6 karakter)">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Yeni Şifre Tekrar</label>
+                    <input type="password" id="confirmPassword" placeholder="Yeni şifreyi tekrar girin">
+                </div>
+                <div class="action-buttons">
+                    <button id="savePasswordBtn" class="submit-btn">Kaydet</button>
+                    <button id="cancelPasswordBtn" class="phone-button">İptal</button>
                 </div>
             </div>
             
@@ -311,7 +466,7 @@
                                     <th>Telefon</th>
                                     <th>Tarih</th>
                                     <th>Durum</th>
-                                    <th>İşlem</th>
+                                    <th>İşlemler</th>
                                 </tr>
                             </thead>
                             <tbody id="bookingsTableBody">
@@ -359,7 +514,7 @@
                         
                         <div class="form-group">
                             <label for="vehicleYear">Model Yılı *</label>
-                            <input type="number" id="vehicleYear" min="2010" max="2024" required>
+                            <input type="number" id="vehicleYear" min="2010" max="2025" required>
                         </div>
                         
                         <div class="form-group">
@@ -377,11 +532,11 @@
                         
                         <input type="hidden" id="vehicleId">
                         
-                        <div style="display: flex; gap: 10px;">
-                            <button type="submit" class="submit-btn" style="flex: 1;">
+                        <div class="action-buttons">
+                            <button type="submit" class="submit-btn">
                                 <i class="fas fa-save"></i> Kaydet
                             </button>
-                            <button type="button" id="cancelFormBtn" class="phone-button" style="flex: 1;">
+                            <button type="button" id="cancelFormBtn" class="phone-button">
                                 <i class="fas fa-times"></i> İptal
                             </button>
                         </div>
@@ -411,6 +566,44 @@
         </div>
     </div>
 
+    <!-- Reddetme Modalı -->
+    <div class="modal-overlay" id="rejectModal">
+        <div class="modal-content">
+            <h3 style="color: #F0C037; margin-bottom: 20px;"><i class="fas fa-times-circle"></i> Rezervasyonu Reddet</h3>
+            <div class="form-group">
+                <label for="rejectReason">Reddetme Nedeni *</label>
+                <textarea id="rejectReason" rows="4" placeholder="Reddetme nedenini açıklayın..." required></textarea>
+            </div>
+            <input type="hidden" id="rejectBookingId">
+            <div class="modal-actions">
+                <button id="confirmRejectBtn" class="reject-btn">Reddet</button>
+                <button id="cancelRejectBtn" class="phone-button">İptal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Onaylama Modalı -->
+    <div class="modal-overlay" id="approveModal">
+        <div class="modal-content">
+            <h3 style="color: #F0C037; margin-bottom: 20px;"><i class="fas fa-check-circle"></i> Rezervasyonu Onayla</h3>
+            <div class="form-group">
+                <label for="approveVehicle">Araç Seçin *</label>
+                <select id="approveVehicle" required>
+                    <!-- Araçlar JavaScript ile eklenecek -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="approveMessage">Müşteriye Not (Opsiyonel)</label>
+                <textarea id="approveMessage" rows="3" placeholder="Müşteriye iletilmek üzere not..."></textarea>
+            </div>
+            <input type="hidden" id="approveBookingId">
+            <div class="modal-actions">
+                <button id="confirmApproveBtn" class="approve-btn">Onayla ve WhatsApp Gönder</button>
+                <button id="cancelApproveBtn" class="phone-button">İptal</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script>
         // Admin paneli özel JavaScript
@@ -419,6 +612,18 @@
             const adminPanel = document.getElementById('adminPanel');
             const loginBtn = document.getElementById('loginBtn');
             const logoutBtn = document.getElementById('logoutBtn');
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            // Şifre değiştirme elemanları
+            const changePasswordBtn = document.getElementById('changePasswordBtn');
+            const passwordForm = document.getElementById('passwordForm');
+            const savePasswordBtn = document.getElementById('savePasswordBtn');
+            const cancelPasswordBtn = document.getElementById('cancelPasswordBtn');
+            
+            // Varsayılan şifreyi kontrol et ve ayarla
+            if (!localStorage.getItem('adminPassword')) {
+                localStorage.setItem('adminPassword', 'gur2023');
+            }
             
             // Giriş kontrolü
             const isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
@@ -434,13 +639,17 @@
             loginBtn.addEventListener('click', function() {
                 const username = document.getElementById('adminUsername').value;
                 const password = document.getElementById('adminPassword').value;
+                const storedPassword = localStorage.getItem('adminPassword') || 'gur2023';
                 
-                if (username === 'admin' && password === 'gur2023') {
+                if (username === 'admin' && password === storedPassword) {
                     localStorage.setItem('adminLoggedIn', 'true');
                     loginScreen.style.display = 'none';
                     adminPanel.style.display = 'block';
                     loadAdminData();
                     updateLastLogin();
+                    // Formları temizle
+                    document.getElementById('adminUsername').value = '';
+                    document.getElementById('adminPassword').value = '';
                 } else {
                     alert('Kullanıcı adı veya şifre hatalı!');
                 }
@@ -449,13 +658,75 @@
             // Çıkış yap
             logoutBtn.addEventListener('click', function() {
                 localStorage.removeItem('adminLoggedIn');
-                window.location.reload();
+                window.location.href = '/';
             });
             
             // Enter tuşu ile giriş
             document.getElementById('adminPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     loginBtn.click();
+                }
+            });
+            
+            // Şifre değiştirme formunu göster/gizle
+            changePasswordBtn.addEventListener('click', function() {
+                passwordForm.style.display = passwordForm.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            // Şifre değiştirme iptal
+            cancelPasswordBtn.addEventListener('click', function() {
+                passwordForm.style.display = 'none';
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+            });
+            
+            // Şifre kaydet
+            savePasswordBtn.addEventListener('click', function() {
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const storedPassword = localStorage.getItem('adminPassword') || 'gur2023';
+                
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                    alert('Lütfen tüm alanları doldurun!');
+                    return;
+                }
+                
+                if (currentPassword !== storedPassword) {
+                    alert('Mevcut şifre hatalı!');
+                    return;
+                }
+                
+                if (newPassword.length < 6) {
+                    alert('Yeni şifre en az 6 karakter olmalıdır!');
+                    return;
+                }
+                
+                if (newPassword !== confirmPassword) {
+                    alert('Yeni şifreler uyuşmuyor!');
+                    return;
+                }
+                
+                localStorage.setItem('adminPassword', newPassword);
+                alert('Şifre başarıyla değiştirildi!');
+                passwordForm.style.display = 'none';
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+            });
+            
+            // Yukarı çık butonu
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Scroll ile yukarı çık butonunu göster/gizle
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.style.display = 'flex';
+                } else {
+                    backToTopBtn.style.display = 'none';
                 }
             });
             
@@ -519,19 +790,40 @@
                 tbody.innerHTML = '';
                 
                 bookings.forEach((booking, index) => {
+                    let statusClass = 'status-pending';
+                    let statusText = 'Beklemede';
+                    
+                    if (booking.status === 'approved') {
+                        statusClass = 'status-approved';
+                        statusText = 'Onaylandı';
+                    } else if (booking.status === 'rejected') {
+                        statusClass = 'status-rejected';
+                        statusText = 'Reddedildi';
+                    }
+                    
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${booking.name}</td>
                         <td>${booking.phone}</td>
                         <td>${booking.pickupDate} - ${booking.returnDate}</td>
-                        <td>Beklemede</td>
+                        <td class="${statusClass}">${statusText}</td>
                         <td>
+                            ${booking.status === 'pending' ? `
+                                <button class="action-btn approve-btn" onclick="showApproveModal(${index})">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="action-btn reject-btn" onclick="showRejectModal(${index})">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            ` : ''}
                             <button class="action-btn edit-btn" onclick="viewBooking(${index})">
                                 <i class="fas fa-eye"></i>
                             </button>
-                            <button class="action-btn delete-btn" onclick="deleteBooking(${index})">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            ${booking.status === 'rejected' ? `
+                                <button class="action-btn delete-btn" onclick="deleteBooking(${index})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            ` : ''}
                         </td>
                     `;
                     tbody.appendChild(row);
@@ -543,7 +835,7 @@
                 const bookings = JSON.parse(localStorage.getItem('gurRentBookings') || '[]');
                 
                 const availableVehicles = vehicles.filter(v => v.available).length;
-                const pendingBookings = bookings.length;
+                const pendingBookings = bookings.filter(b => b.status === 'pending').length;
                 
                 document.getElementById('totalVehicles').textContent = vehicles.length;
                 document.getElementById('availableVehicles').textContent = availableVehicles;
@@ -566,6 +858,137 @@
                 document.getElementById('lastUpdate').textContent = dateStr;
             }
             
+            // Modal fonksiyonları
+            window.showRejectModal = function(index) {
+                document.getElementById('rejectBookingId').value = index;
+                document.getElementById('rejectReason').value = '';
+                document.getElementById('rejectModal').style.display = 'flex';
+            };
+            
+            window.showApproveModal = function(index) {
+                const vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
+                const availableVehicles = vehicles.filter(v => v.available);
+                const vehicleSelect = document.getElementById('approveVehicle');
+                
+                vehicleSelect.innerHTML = '<option value="">Araç seçin</option>';
+                availableVehicles.forEach(vehicle => {
+                    const option = document.createElement('option');
+                    option.value = vehicle.id;
+                    option.textContent = `${vehicle.name} (${vehicle.segment})`;
+                    vehicleSelect.appendChild(option);
+                });
+                
+                document.getElementById('approveBookingId').value = index;
+                document.getElementById('approveMessage').value = '';
+                document.getElementById('approveModal').style.display = 'flex';
+            };
+            
+            // Modal kapatma
+            document.getElementById('cancelRejectBtn').addEventListener('click', function() {
+                document.getElementById('rejectModal').style.display = 'none';
+            });
+            
+            document.getElementById('cancelApproveBtn').addEventListener('click', function() {
+                document.getElementById('approveModal').style.display = 'none';
+            });
+            
+            // Reddetme onayı
+            document.getElementById('confirmRejectBtn').addEventListener('click', function() {
+                const index = document.getElementById('rejectBookingId').value;
+                const reason = document.getElementById('rejectReason').value;
+                
+                if (!reason) {
+                    alert('Lütfen reddetme nedenini yazın!');
+                    return;
+                }
+                
+                let bookings = JSON.parse(localStorage.getItem('gurRentBookings') || '[]');
+                if (bookings[index]) {
+                    bookings[index].status = 'rejected';
+                    bookings[index].rejectionReason = reason;
+                    bookings[index].processedDate = new Date().toLocaleString('tr-TR');
+                    
+                    localStorage.setItem('gurRentBookings', JSON.stringify(bookings));
+                    
+                    // WhatsApp mesajı oluştur
+                    const booking = bookings[index];
+                    const whatsappMessage = `Sayın ${booking.name},%0A%0A` +
+                                          `Rezervasyon talebiniz değerlendirilmiş ve maalesef kabul edilmemiştir.%0A%0A` +
+                                          `Reddetme Nedeni: ${reason}%0A%0A` +
+                                          `Daha fazla bilgi için: +90 544 970 9712%0A` +
+                                          `Gür Rent A Car`;
+                    
+                    // WhatsApp linkini aç
+                    window.open(`https://wa.me/${booking.phone.replace(/\D/g, '')}?text=${whatsappMessage}`, '_blank');
+                    
+                    loadBookings();
+                    updateStats();
+                    document.getElementById('rejectModal').style.display = 'none';
+                    
+                    alert('Rezervasyon reddedildi ve WhatsApp mesajı gönderildi!');
+                }
+            });
+            
+            // Onaylama işlemi
+            document.getElementById('confirmApproveBtn').addEventListener('click', function() {
+                const index = document.getElementById('approveBookingId').value;
+                const vehicleId = document.getElementById('approveVehicle').value;
+                const message = document.getElementById('approveMessage').value;
+                
+                if (!vehicleId) {
+                    alert('Lütfen bir araç seçin!');
+                    return;
+                }
+                
+                let bookings = JSON.parse(localStorage.getItem('gurRentBookings') || '[]');
+                const vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
+                
+                if (bookings[index]) {
+                    const selectedVehicle = vehicles.find(v => v.id == vehicleId);
+                    
+                    if (!selectedVehicle || !selectedVehicle.available) {
+                        alert('Seçilen araç müsait değil!');
+                        return;
+                    }
+                    
+                    // Araç durumunu güncelle
+                    const vehicleIndex = vehicles.findIndex(v => v.id == vehicleId);
+                    vehicles[vehicleIndex].available = false;
+                    localStorage.setItem('gurRentVehicles', JSON.stringify(vehicles));
+                    
+                    // Rezervasyonu güncelle
+                    bookings[index].status = 'approved';
+                    bookings[index].assignedVehicle = vehicleId;
+                    bookings[index].assignedVehicleName = selectedVehicle.name;
+                    bookings[index].processedDate = new Date().toLocaleString('tr-TR');
+                    
+                    localStorage.setItem('gurRentBookings', JSON.stringify(bookings));
+                    
+                    // WhatsApp mesajı oluştur
+                    const booking = bookings[index];
+                    const whatsappMessage = `Sayın ${booking.name},%0A%0A` +
+                                          `Rezervasyon talebiniz onaylanmıştır! 🎉%0A%0A` +
+                                          `Onaylanan Araç: ${selectedVehicle.name}%0A` +
+                                          `Alış Tarihi: ${booking.pickupDate}%0A` +
+                                          `İade Tarihi: ${booking.returnDate}%0A` +
+                                          `Segment: ${selectedVehicle.segment}%0A` +
+                                          `${message ? `Not: ${message}%0A` : ''}%0A` +
+                                          `Teslimat adresi: Külhan Mh. 2. İstasyon Cd. No:29/E Merkez/Karaman%0A` +
+                                          `İrtibat: +90 544 970 9712%0A%0A` +
+                                          `Gür Rent A Car`;
+                    
+                    // WhatsApp linkini aç
+                    window.open(`https://wa.me/${booking.phone.replace(/\D/g, '')}?text=${whatsappMessage}`, '_blank');
+                    
+                    loadVehicles();
+                    loadBookings();
+                    updateStats();
+                    document.getElementById('approveModal').style.display = 'none';
+                    
+                    alert('Rezervasyon onaylandı, araç durumu güncellendi ve WhatsApp mesajı gönderildi!');
+                }
+            });
+            
             // Global fonksiyonlar
             window.editVehicle = function(id) {
                 const vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
@@ -584,7 +1007,6 @@
                     document.getElementById('vehicleForm').style.display = 'block';
                     document.getElementById('addVehicleBtn').style.display = 'none';
                     
-                    // Formu görünür yap
                     document.getElementById('vehicleForm').scrollIntoView({ behavior: 'smooth' });
                 }
             };
@@ -616,16 +1038,38 @@
             window.viewBooking = function(index) {
                 const bookings = JSON.parse(localStorage.getItem('gurRentBookings') || '[]');
                 const booking = bookings[index];
+                const vehicles = JSON.parse(localStorage.getItem('gurRentVehicles') || '[]');
                 
-                const details = `
+                let details = `
                     Müşteri: ${booking.name}
                     Telefon: ${booking.phone}
                     E-posta: ${booking.email || 'Belirtilmemiş'}
-                    Araç: ${booking.vehicle || 'Belirtilmemiş'}
-                    Tarih: ${booking.pickupDate} - ${booking.returnDate}
-                    Not: ${booking.message || 'Yok'}
                     Talep Tarihi: ${booking.date}
+                    Alış Tarihi: ${booking.pickupDate}
+                    İade Tarihi: ${booking.returnDate}
+                    Durum: ${booking.status === 'pending' ? 'Beklemede' : booking.status === 'approved' ? 'Onaylandı' : 'Reddedildi'}
                 `;
+                
+                if (booking.vehicle) {
+                    const vehicle = vehicles.find(v => v.id == booking.vehicle);
+                    details += `\nSeçilen Araç: ${vehicle ? vehicle.name : 'Belirtilmemiş'}`;
+                }
+                
+                if (booking.assignedVehicleName) {
+                    details += `\nAtanan Araç: ${booking.assignedVehicleName}`;
+                }
+                
+                if (booking.rejectionReason) {
+                    details += `\nReddetme Nedeni: ${booking.rejectionReason}`;
+                }
+                
+                if (booking.message) {
+                    details += `\nMüşteri Notu: ${booking.message}`;
+                }
+                
+                if (booking.processedDate) {
+                    details += `\nİşlem Tarihi: ${booking.processedDate}`;
+                }
                 
                 alert(details);
             };
@@ -645,6 +1089,7 @@
             document.getElementById('addVehicleBtn').addEventListener('click', function() {
                 document.getElementById('vehicleFormContent').reset();
                 document.getElementById('vehicleId').value = '';
+                document.getElementById('vehicleYear').value = new Date().getFullYear();
                 document.getElementById('vehicleForm').style.display = 'block';
                 this.style.display = 'none';
                 document.getElementById('vehicleForm').scrollIntoView({ behavior: 'smooth' });
@@ -766,6 +1211,9 @@
                     alert('Tüm veriler sıfırlandı!');
                 }
             });
+            
+            // Sayfa yüklendiğinde back to top butonunu gizle
+            backToTopBtn.style.display = 'none';
         });
     </script>
 </body>
