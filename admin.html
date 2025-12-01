@@ -17,14 +17,20 @@
         
         .admin-header {
             background: #1A1A1A;
-            padding: 20px;
+            padding: 20px 0;
             border-bottom: 2px solid #F0C037;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
         
         .admin-header-content {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -65,7 +71,7 @@
         
         .admin-main {
             flex: 1;
-            padding: 40px 20px;
+            padding: 140px 20px 40px;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
@@ -339,6 +345,10 @@
                 justify-content: center;
             }
             
+            .admin-main {
+                padding: 180px 20px 40px;
+            }
+            
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -358,6 +368,10 @@
         }
         
         @media (max-width: 480px) {
+            .admin-main {
+                padding: 200px 15px 40px;
+            }
+            
             .stats-grid {
                 grid-template-columns: 1fr;
             }
@@ -367,7 +381,68 @@
             }
         }
         
-        /* Back to top butonu için admin sayfası */
+        /* Araç Ekleme Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: #1A1A1A;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            position: relative;
+            border: 1px solid #333;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            color: #F0C037;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .modal-close:hover {
+            color: #F0C037;
+        }
+        
+        .modal-body {
+            margin-bottom: 20px;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        /* Back to top butonu */
         .back-to-top {
             position: fixed;
             bottom: 100px;
@@ -398,6 +473,85 @@
         <!-- Back to top -->
         <div class="back-to-top" id="backToTop">
             <i class="fas fa-chevron-up"></i>
+        </div>
+        
+        <!-- Araç Ekleme Modal -->
+        <div id="vehicleModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><i class="fas fa-car"></i> Araç Ekle/Düzenle</h3>
+                    <button class="modal-close" id="modalClose">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="vehicleForm">
+                        <div class="form-group">
+                            <label for="vehicleName"><i class="fas fa-car"></i> Araç Adı</label>
+                            <input type="text" id="vehicleName" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleSegment"><i class="fas fa-tag"></i> Segment</label>
+                            <select id="vehicleSegment" class="form-control" required>
+                                <option value="ekonomik">Ekonomik</option>
+                                <option value="orta">Orta Segment</option>
+                                <option value="lüks">Lüks</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehiclePrice"><i class="fas fa-money-bill-wave"></i> Günlük Fiyat (TL)</label>
+                            <input type="number" id="vehiclePrice" class="form-control" min="0" step="50" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleTransmission"><i class="fas fa-cog"></i> Vites</label>
+                            <select id="vehicleTransmission" class="form-control" required>
+                                <option value="Otomatik">Otomatik</option>
+                                <option value="Manuel">Manuel</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleFuel"><i class="fas fa-gas-pump"></i> Yakıt</label>
+                            <select id="vehicleFuel" class="form-control" required>
+                                <option value="Benzin">Benzin</option>
+                                <option value="Dizel">Dizel</option>
+                                <option value="Hibrit">Hibrit</option>
+                                <option value="Elektrik">Elektrik</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleYear"><i class="fas fa-calendar-alt"></i> Yıl</label>
+                            <input type="number" id="vehicleYear" class="form-control" min="2010" max="2025" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-check-circle"></i> Durum</label>
+                            <div style="display: flex; gap: 20px; margin-top: 10px;">
+                                <label style="display: flex; align-items: center; gap: 5px;">
+                                    <input type="radio" name="vehicleStatus" value="available" checked>
+                                    <span>Müsait</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 5px;">
+                                    <input type="radio" name="vehicleStatus" value="unavailable">
+                                    <span>Kiralık</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicleFeatures"><i class="fas fa-list"></i> Özellikler (virgülle ayırın)</label>
+                            <input type="text" id="vehicleFeatures" class="form-control" 
+                                   placeholder="Klima, Bluetooth, Park Sensörü, USB">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="modalCancel">İptal</button>
+                    <button type="button" class="btn btn-success" id="modalSave">Kaydet</button>
+                </div>
+            </div>
         </div>
         
         <!-- Login Screen -->
@@ -435,6 +589,9 @@
                     
                     <div class="admin-nav">
                         <a href="https://flux-gold.github.io/gur-rent-a-car/"><i class="fas fa-home"></i> Siteye Dön</a>
+                        <button id="addVehicleBtn" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Araç Ekle
+                        </button>
                         <button id="logoutBtn" class="btn btn-danger">
                             <i class="fas fa-sign-out-alt"></i> Çıkış Yap
                         </button>
@@ -481,8 +638,10 @@
                                 <tr>
                                     <th>Araç Adı</th>
                                     <th>Segment</th>
-                                    <th>Durum</th>
+                                    <th>Vites</th>
+                                    <th>Yakıt</th>
                                     <th>Fiyat</th>
+                                    <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </thead>
@@ -496,9 +655,6 @@
                         <button id="refreshVehiclesBtn" class="btn btn-primary">
                             <i class="fas fa-redo"></i> Araçları Yenile
                         </button>
-                        <p style="color: #999; margin-top: 10px; font-size: 14px;">
-                            Not: GitHub Pages'de araç ekleme/düzenleme özelliği kısıtlıdır.
-                        </p>
                     </div>
                 </div>
                 
@@ -513,6 +669,7 @@
                                     <th>Müşteri</th>
                                     <th>Telefon</th>
                                     <th>Tarih</th>
+                                    <th>Araç</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
@@ -579,12 +736,32 @@
             const adminPassword = document.getElementById('adminPassword');
             const loginAlert = document.getElementById('loginAlert');
             const backToTopBtn = document.getElementById('backToTop');
+            const addVehicleBtn = document.getElementById('addVehicleBtn');
+            
+            // Modal elements
+            const vehicleModal = document.getElementById('vehicleModal');
+            const modalClose = document.getElementById('modalClose');
+            const modalCancel = document.getElementById('modalCancel');
+            const modalSave = document.getElementById('modalSave');
+            
+            // Form elements
+            const vehicleForm = document.getElementById('vehicleForm');
+            const vehicleName = document.getElementById('vehicleName');
+            const vehicleSegment = document.getElementById('vehicleSegment');
+            const vehiclePrice = document.getElementById('vehiclePrice');
+            const vehicleTransmission = document.getElementById('vehicleTransmission');
+            const vehicleFuel = document.getElementById('vehicleFuel');
+            const vehicleYear = document.getElementById('vehicleYear');
+            const vehicleFeatures = document.getElementById('vehicleFeatures');
             
             // Admin şifresi
             const ADMIN_PASSWORD = 'gur2023';
             
             // Oturum kontrolü
             const isLoggedIn = sessionStorage.getItem('adminLoggedIn') === 'true';
+            
+            // Modal için geçerli araç ID (düzenleme için)
+            let currentVehicleId = null;
             
             if (isLoggedIn) {
                 showAdminPanel();
@@ -616,6 +793,46 @@
                     sessionStorage.removeItem('adminLoggedIn');
                     showLoginScreen();
                     showAlert('Çıkış yapıldı.', 'success');
+                });
+            }
+            
+            // Araç ekle butonu
+            if (addVehicleBtn) {
+                addVehicleBtn.addEventListener('click', function() {
+                    currentVehicleId = null;
+                    resetVehicleForm();
+                    vehicleModal.style.display = 'block';
+                });
+            }
+            
+            // Modal kapatma
+            if (modalClose) {
+                modalClose.addEventListener('click', function() {
+                    vehicleModal.style.display = 'none';
+                });
+            }
+            
+            if (modalCancel) {
+                modalCancel.addEventListener('click', function() {
+                    vehicleModal.style.display = 'none';
+                });
+            }
+            
+            // Modal dışına tıklayınca kapat
+            window.addEventListener('click', function(e) {
+                if (e.target === vehicleModal) {
+                    vehicleModal.style.display = 'none';
+                }
+            });
+            
+            // Araç kaydet
+            if (modalSave) {
+                modalSave.addEventListener('click', function() {
+                    if (saveVehicle()) {
+                        vehicleModal.style.display = 'none';
+                        loadVehicles();
+                        updateStats();
+                    }
                 });
             }
             
@@ -654,7 +871,7 @@
             
             // Araçları yükle
             function loadVehicles() {
-                const storageKey = 'gurRent_vehicles_' + window.location.hostname;
+                const storageKey = getStorageKey('vehicles');
                 const vehicles = JSON.parse(localStorage.getItem(storageKey) || '[]');
                 const tbody = document.getElementById('vehiclesTableBody');
                 
@@ -665,7 +882,7 @@
                 if (vehicles.length === 0) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="5" style="text-align: center; padding: 40px; color: #999;">
+                            <td colspan="7" style="text-align: center; padding: 40px; color: #999;">
                                 <i class="fas fa-car" style="font-size: 40px; margin-bottom: 10px; display: block;"></i>
                                 <p>Henüz araç bulunmuyor</p>
                             </td>
@@ -679,16 +896,18 @@
                     row.innerHTML = `
                         <td>${vehicle.name}</td>
                         <td>${vehicle.segment}</td>
+                        <td>${vehicle.transmission}</td>
+                        <td>${vehicle.fuel}</td>
+                        <td>${vehicle.price || '0'} TL/gün</td>
                         <td>
                             <span class="status status-${vehicle.available ? 'available' : 'unavailable'}">
                                 ${vehicle.available ? 'Müsait' : 'Kiralık'}
                             </span>
                         </td>
-                        <td>${vehicle.price || '0'} TL/gün</td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-sm btn-warning" onclick="toggleVehicleStatus(${vehicle.id})">
-                                    <i class="fas fa-sync"></i>
+                                <button class="btn btn-sm btn-warning" onclick="editVehicle(${vehicle.id})">
+                                    <i class="fas fa-edit"></i>
                                 </button>
                                 <button class="btn btn-sm btn-danger" onclick="deleteVehicle(${vehicle.id})">
                                     <i class="fas fa-trash"></i>
@@ -700,9 +919,106 @@
                 });
             }
             
+            // Araç düzenle
+            window.editVehicle = function(vehicleId) {
+                const storageKey = getStorageKey('vehicles');
+                const vehicles = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                const vehicle = vehicles.find(v => v.id === vehicleId);
+                
+                if (vehicle) {
+                    currentVehicleId = vehicleId;
+                    
+                    // Formu doldur
+                    vehicleName.value = vehicle.name || '';
+                    vehicleSegment.value = vehicle.segment || 'ekonomik';
+                    vehiclePrice.value = vehicle.price || '';
+                    vehicleTransmission.value = vehicle.transmission || 'Otomatik';
+                    vehicleFuel.value = vehicle.fuel || 'Benzin';
+                    vehicleYear.value = vehicle.year || '2023';
+                    vehicleFeatures.value = vehicle.features ? vehicle.features.join(', ') : '';
+                    
+                    // Durum radyo butonları
+                    const statusRadios = document.getElementsByName('vehicleStatus');
+                    statusRadios.forEach(radio => {
+                        radio.checked = (radio.value === 'available') ? vehicle.available : !vehicle.available;
+                    });
+                    
+                    // Modal'ı göster
+                    vehicleModal.style.display = 'block';
+                }
+            };
+            
+            // Araç kaydet
+            function saveVehicle() {
+                // Validasyon
+                if (!vehicleName.value.trim()) {
+                    alert('Araç adı gereklidir!');
+                    return false;
+                }
+                
+                if (!vehiclePrice.value || vehiclePrice.value <= 0) {
+                    alert('Geçerli bir fiyat giriniz!');
+                    return false;
+                }
+                
+                const storageKey = getStorageKey('vehicles');
+                let vehicles = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                
+                const vehicleData = {
+                    id: currentVehicleId || Date.now(),
+                    name: vehicleName.value.trim(),
+                    segment: vehicleSegment.value,
+                    price: parseInt(vehiclePrice.value),
+                    transmission: vehicleTransmission.value,
+                    fuel: vehicleFuel.value,
+                    year: parseInt(vehicleYear.value),
+                    available: document.querySelector('input[name="vehicleStatus"]:checked').value === 'available',
+                    features: vehicleFeatures.value.split(',').map(f => f.trim()).filter(f => f),
+                    image: 'fa-car'
+                };
+                
+                if (currentVehicleId) {
+                    // Düzenleme
+                    const index = vehicles.findIndex(v => v.id === currentVehicleId);
+                    if (index !== -1) {
+                        vehicles[index] = vehicleData;
+                    }
+                } else {
+                    // Yeni ekleme
+                    vehicles.push(vehicleData);
+                }
+                
+                localStorage.setItem(storageKey, JSON.stringify(vehicles));
+                showAlert(`Araç ${currentVehicleId ? 'güncellendi' : 'eklendi'}!`, 'success');
+                return true;
+            }
+            
+            // Araç formunu sıfırla
+            function resetVehicleForm() {
+                vehicleForm.reset();
+                vehicleName.value = '';
+                vehiclePrice.value = '';
+                vehicleYear.value = '2023';
+                vehicleFeatures.value = '';
+                currentVehicleId = null;
+            }
+            
+            // Araç sil
+            window.deleteVehicle = function(vehicleId) {
+                if (confirm('Bu aracı silmek istediğinize emin misiniz?')) {
+                    const storageKey = getStorageKey('vehicles');
+                    let vehicles = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                    vehicles = vehicles.filter(v => v.id !== vehicleId);
+                    localStorage.setItem(storageKey, JSON.stringify(vehicles));
+                    loadVehicles();
+                    updateStats();
+                    showAlert('Araç silindi!', 'success');
+                }
+            };
+            
             // Rezervasyonları yükle
             function loadBookings() {
-                const storageKey = 'gurRent_bookings';
+                const storageKey = getStorageKey('bookings');
                 const bookings = JSON.parse(localStorage.getItem(storageKey) || '[]');
                 const tbody = document.getElementById('bookingsTableBody');
                 
@@ -713,7 +1029,7 @@
                 if (bookings.length === 0) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="5" style="text-align: center; padding: 40px; color: #999;">
+                            <td colspan="6" style="text-align: center; padding: 40px; color: #999;">
                                 <i class="fas fa-calendar" style="font-size: 40px; margin-bottom: 10px; display: block;"></i>
                                 <p>Henüz rezervasyon bulunmuyor</p>
                             </td>
@@ -734,11 +1050,23 @@
                         statusText = 'Reddedildi';
                     }
                     
+                    // Araç adını bul
+                    let vehicleName = 'Seçilmemiş';
+                    if (booking.vehicle) {
+                        const vehiclesStorageKey = getStorageKey('vehicles');
+                        const vehicles = JSON.parse(localStorage.getItem(vehiclesStorageKey) || '[]');
+                        const vehicle = vehicles.find(v => v.id == booking.vehicle);
+                        if (vehicle) {
+                            vehicleName = vehicle.name;
+                        }
+                    }
+                    
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${booking.name}</td>
                         <td>${booking.phone}</td>
                         <td>${booking.pickupDate} - ${booking.returnDate}</td>
+                        <td>${vehicleName}</td>
                         <td>
                             <span class="status status-${statusClass}">
                                 ${statusText}
@@ -746,7 +1074,13 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <button class="btn btn-sm btn-success" onclick="viewBooking(${index})">
+                                <button class="btn btn-sm btn-success" onclick="approveBooking(${index})">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="rejectBooking(${index})">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning" onclick="viewBookingDetails(${index})">
                                     <i class="fas fa-eye"></i>
                                 </button>
                                 <button class="btn btn-sm btn-danger" onclick="deleteBooking(${index})">
@@ -759,63 +1093,34 @@
                 });
             }
             
-            // İstatistikleri güncelle
-            function updateStats() {
-                const storageKey = 'gurRent_vehicles_' + window.location.hostname;
-                const vehicles = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                const bookings = JSON.parse(localStorage.getItem('gurRent_bookings') || '[]');
-                
-                const availableVehicles = vehicles.filter(v => v.available).length;
-                const pendingBookings = bookings.filter(b => b.status === 'pending').length;
-                
-                document.getElementById('totalVehicles').textContent = vehicles.length;
-                document.getElementById('availableVehicles').textContent = availableVehicles;
-                document.getElementById('totalBookings').textContent = bookings.length;
-                document.getElementById('pendingBookings').textContent = pendingBookings;
-            }
-            
-            // Sistem bilgilerini güncelle
-            function updateSystemInfo() {
-                const storageKey = 'gurRent_vehicles_' + window.location.hostname;
-                const vehicles = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                const bookings = JSON.parse(localStorage.getItem('gurRent_bookings') || '[]');
-                
-                document.getElementById('storageVehicles').textContent = vehicles.length;
-                document.getElementById('storageBookings').textContent = bookings.length;
-                
-                const now = new Date();
-                document.getElementById('lastUpdate').textContent = now.toLocaleString('tr-TR');
-            }
-            
-            // Global fonksiyonlar
-            window.toggleVehicleStatus = function(vehicleId) {
-                const storageKey = 'gurRent_vehicles_' + window.location.hostname;
-                const vehicles = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                const vehicleIndex = vehicles.findIndex(v => v.id === vehicleId);
-                
-                if (vehicleIndex !== -1) {
-                    vehicles[vehicleIndex].available = !vehicles[vehicleIndex].available;
-                    localStorage.setItem(storageKey, JSON.stringify(vehicles));
-                    loadVehicles();
-                    updateStats();
-                    alert(`Araç durumu ${vehicles[vehicleIndex].available ? 'Müsait' : 'Kiralık'} olarak güncellendi.`);
+            // Rezervasyon onayla
+            window.approveBooking = function(index) {
+                const storageKey = getStorageKey('bookings');
+                let bookings = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                if (bookings[index]) {
+                    bookings[index].status = 'approved';
+                    localStorage.setItem(storageKey, JSON.stringify(bookings));
+                    loadBookings();
+                    showAlert('Rezervasyon onaylandı!', 'success');
                 }
             };
             
-            window.deleteVehicle = function(vehicleId) {
-                if (confirm('Bu aracı silmek istediğinize emin misiniz?')) {
-                    const storageKey = 'gurRent_vehicles_' + window.location.hostname;
-                    let vehicles = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                    vehicles = vehicles.filter(v => v.id !== vehicleId);
-                    localStorage.setItem(storageKey, JSON.stringify(vehicles));
-                    loadVehicles();
-                    updateStats();
-                    alert('Araç silindi!');
+            // Rezervasyon reddet
+            window.rejectBooking = function(index) {
+                const storageKey = getStorageKey('bookings');
+                let bookings = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                if (bookings[index]) {
+                    bookings[index].status = 'rejected';
+                    localStorage.setItem(storageKey, JSON.stringify(bookings));
+                    loadBookings();
+                    showAlert('Rezervasyon reddedildi!', 'success');
                 }
             };
             
-            window.viewBooking = function(index) {
-                const bookings = JSON.parse(localStorage.getItem('gurRent_bookings') || '[]');
+            // Rezervasyon detaylarını gör
+            window.viewBookingDetails = function(index) {
+                const storageKey = getStorageKey('bookings');
+                const bookings = JSON.parse(localStorage.getItem(storageKey) || '[]');
                 const booking = bookings[index];
                 
                 if (booking) {
@@ -834,6 +1139,7 @@
                         Durum: ${booking.status === 'pending' ? 'Beklemede' : booking.status === 'approved' ? 'Onaylandı' : 'Reddedildi'}
                         
                         ${booking.vehicle ? `Seçilen Araç ID: ${booking.vehicle}` : ''}
+                        ${booking.quickNotes && booking.quickNotes.length > 0 ? `\nHazır Notlar: ${booking.quickNotes.join(', ')}` : ''}
                         ${booking.message ? `\nMüşteri Notu: ${booking.message}` : ''}
                     `;
                     
@@ -841,16 +1147,57 @@
                 }
             };
             
+            // Rezervasyon sil
             window.deleteBooking = function(index) {
                 if (confirm('Bu rezervasyonu silmek istediğinize emin misiniz?')) {
-                    let bookings = JSON.parse(localStorage.getItem('gurRent_bookings') || '[]');
+                    const storageKey = getStorageKey('bookings');
+                    let bookings = JSON.parse(localStorage.getItem(storageKey) || '[]');
                     bookings.splice(index, 1);
-                    localStorage.setItem('gurRent_bookings', JSON.stringify(bookings));
+                    localStorage.setItem(storageKey, JSON.stringify(bookings));
                     loadBookings();
                     updateStats();
-                    alert('Rezervasyon silindi!');
+                    showAlert('Rezervasyon silindi!', 'success');
                 }
             };
+            
+            // İstatistikleri güncelle
+            function updateStats() {
+                const vehiclesKey = getStorageKey('vehicles');
+                const bookingsKey = getStorageKey('bookings');
+                const vehicles = JSON.parse(localStorage.getItem(vehiclesKey) || '[]');
+                const bookings = JSON.parse(localStorage.getItem(bookingsKey) || '[]');
+                
+                const availableVehicles = vehicles.filter(v => v.available).length;
+                const pendingBookings = bookings.filter(b => b.status === 'pending').length;
+                
+                document.getElementById('totalVehicles').textContent = vehicles.length;
+                document.getElementById('availableVehicles').textContent = availableVehicles;
+                document.getElementById('totalBookings').textContent = bookings.length;
+                document.getElementById('pendingBookings').textContent = pendingBookings;
+            }
+            
+            // Sistem bilgilerini güncelle
+            function updateSystemInfo() {
+                const vehiclesKey = getStorageKey('vehicles');
+                const bookingsKey = getStorageKey('bookings');
+                const vehicles = JSON.parse(localStorage.getItem(vehiclesKey) || '[]');
+                const bookings = JSON.parse(localStorage.getItem(bookingsKey) || '[]');
+                
+                document.getElementById('storageVehicles').textContent = vehicles.length;
+                document.getElementById('storageBookings').textContent = bookings.length;
+                
+                const now = new Date();
+                document.getElementById('lastUpdate').textContent = now.toLocaleString('tr-TR');
+            }
+            
+            // Storage key oluştur
+            function getStorageKey(type) {
+                const prefix = 'gurRent_';
+                if (type === 'vehicles') {
+                    return prefix + 'vehicles_' + window.location.hostname;
+                }
+                return prefix + type;
+            }
             
             // Yenileme butonları
             document.getElementById('refreshVehiclesBtn')?.addEventListener('click', loadVehicles);
@@ -858,9 +1205,10 @@
             
             // Veri dışa aktarma
             document.getElementById('exportDataBtn')?.addEventListener('click', function() {
-                const storageKey = 'gurRent_vehicles_' + window.location.hostname;
-                const vehicles = JSON.parse(localStorage.getItem(storageKey) || '[]');
-                const bookings = JSON.parse(localStorage.getItem('gurRent_bookings') || '[]');
+                const vehiclesKey = getStorageKey('vehicles');
+                const bookingsKey = getStorageKey('bookings');
+                const vehicles = JSON.parse(localStorage.getItem(vehiclesKey) || '[]');
+                const bookings = JSON.parse(localStorage.getItem(bookingsKey) || '[]');
                 
                 const data = {
                     vehicles: vehicles,
@@ -882,7 +1230,7 @@
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
                 
-                alert('Veriler başarıyla dışa aktarıldı!');
+                showAlert('Veriler başarıyla dışa aktarıldı!', 'success');
             });
             
             // Veri temizleme
@@ -890,7 +1238,7 @@
                 if (confirm('TÜM verileri temizlemek istediğinize emin misiniz? Bu işlem geri alınamaz!')) {
                     localStorage.clear();
                     sessionStorage.clear();
-                    alert('Tüm veriler temizlendi! Sayfa yenilenecek.');
+                    showAlert('Tüm veriler temizlendi! Sayfa yenilenecek.', 'success');
                     setTimeout(() => location.reload(), 1000);
                 }
             });

@@ -1,6 +1,6 @@
 // ============================================
 // GÜR RENT A CAR - ANA JAVASCRIPT DOSYASI
-// GitHub Pages Uyumlu
+// GitHub Pages Uyumlu - GÜNCELLENMİŞ
 // ============================================
 
 // Konfigürasyon
@@ -10,12 +10,15 @@ const CONFIG = {
     COMPANY_NAME: 'Gür Rent A Car',
     COMPANY_ADDRESS: 'Külhan Mh. 2. İstasyon Cd. No:29/E Merkez/Karaman',
     ADMIN_PASSWORD: 'gur2023',
-    STORAGE_PREFIX: 'gurRent_'
+    STORAGE_PREFIX: 'gurRent_',
+    MAP_EMBED_URL: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3169.382693073944!2d33.214343315639!3d37.1817976798305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d9fd5c5d5d5d5d%3A0x5d5d5d5d5d5d5d5d!2sKaraman!5e0!3m2!1str!2str!4v1641234567890!5m2!1str!2str'
 };
 
 // Global değişkenler
 let flatpickrLoaded = false;
 let vehiclesData = [];
+let testimonialSlider = null;
+let autoScrollInterval = null;
 
 // ===== DOM YÜKLENDİĞİNDE =====
 document.addEventListener('DOMContentLoaded', function() {
@@ -45,6 +48,9 @@ function initializeApp() {
     // LocalStorage'ı başlat
     initStorage();
     
+    // Navigasyon bağlantılarını başlat
+    initNavigation();
+    
     // Araçları yükle
     loadVehicles();
     
@@ -57,8 +63,8 @@ function initializeApp() {
     // Testimonial slider'ı başlat
     initTestimonialSlider();
     
-    // Haritayı başlat
-    initMap();
+    // Haritayı yükle
+    loadMap();
     
     // Scroll olaylarını başlat
     initScrollEvents();
@@ -114,6 +120,59 @@ function initMobileMenu() {
             mobileMenuBtn.setAttribute('aria-expanded', 'false');
         }
     }
+}
+
+// ===== NAVİGASYON BAĞLANTILARI =====
+function initNavigation() {
+    // Ana navigasyon linkleri
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                // Mobil menüyü kapat
+                closeMobileMenu();
+                
+                // Scroll
+                const header = document.querySelector('header');
+                const headerHeight = header ? header.offsetHeight : 0;
+                const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Aktif link'i güncelle
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+    
+    // Footer navigasyon linkleri
+    const footerLinks = document.querySelectorAll('.footer-nav-link');
+    footerLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                const header = document.querySelector('header');
+                const headerHeight = header ? header.offsetHeight : 0;
+                const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
 }
 
 // ===== TARİH SEÇİCİ =====
@@ -392,26 +451,106 @@ function initStorage() {
         }
     ];
     
+    // Varsayılan yorumlar
+    const defaultTestimonials = [
+        {
+            id: 1,
+            content: "Tıkır tıkır işleyen sistemleri var, Karaman'da araç kiralayacaksanız kesinlikle tavsiye ederim.",
+            author: "Fatih P.",
+            role: "İş Adamı",
+            rating: 5,
+            date: "15 Ara 2023"
+        },
+        {
+            id: 2,
+            content: "Aldığımız araç çok temiz ve bakımlıydı, fiyat performans açısından çok iyi. Tekrar tercih edeceğim.",
+            author: "Salih K.",
+            role: "Öğretmen",
+            rating: 4.5,
+            date: "10 Kas 2023"
+        },
+        {
+            id: 3,
+            content: "Firma çok ilgili ve profesyonel, biz tatil için kiraladık, herşey çok güzeldi, memnun kaldık.",
+            author: "Melike A.",
+            role: "Doktor",
+            rating: 5,
+            date: "5 Eki 2023"
+        },
+        {
+            id: 4,
+            content: "Karaman'a geldiğimde hep Gür Rent A Car'dan kiralıyorum. Hem uygun fiyatlı hem de araçları temiz.",
+            author: "Ahmet Y.",
+            role: "İş Seyahati",
+            rating: 5,
+            date: "20 Eyl 2023"
+        },
+        {
+            id: 5,
+            content: "7/24 destek hizmeti harika! Gece yarısı bir sorun olduğunda bile hemen çözüm buldular.",
+            author: "Emre D.",
+            role: "İş Seyahati",
+            rating: 5,
+            date: "15 Ağu 2023"
+        },
+        {
+            id: 6,
+            content: "Araçlar her zaman temiz ve bakımlı. Fiyatları da çok uygun. Karaman'da tek tercihim.",
+            author: "Cemal T.",
+            role: "Serbest Meslek",
+            rating: 5,
+            date: "10 Tem 2023"
+        },
+        {
+            id: 7,
+            content: "Havaalanı teslimi çok kolay oldu. Araç tam zamanında hazırdı ve çok temizdi.",
+            author: "Seda M.",
+            role: "Turist",
+            rating: 4.5,
+            date: "5 Haz 2023"
+        },
+        {
+            id: 8,
+            content: "Fiyatları çok uygun, araçları yeni ve temiz. Kesinlikle tavsiye ediyorum.",
+            author: "Mustafa K.",
+            role: "Öğrenci",
+            rating: 5,
+            date: "25 May 2023"
+        }
+    ];
+    
+    // Storage key'leri
+    const vehiclesKey = CONFIG.STORAGE_PREFIX + 'vehicles_' + window.location.hostname;
+    const testimonialsKey = CONFIG.STORAGE_PREFIX + 'testimonials';
+    const bookingsKey = CONFIG.STORAGE_PREFIX + 'bookings';
+    const statsKey = CONFIG.STORAGE_PREFIX + 'stats';
+    
     // Araçları kontrol et ve yükle
-    if (!localStorage.getItem(storageKey)) {
-        localStorage.setItem(storageKey, JSON.stringify(defaultVehicles));
+    if (!localStorage.getItem(vehiclesKey)) {
+        localStorage.setItem(vehiclesKey, JSON.stringify(defaultVehicles));
         console.log('Varsayılan araçlar yüklendi');
     }
     
+    // Yorumları kontrol et ve yükle
+    if (!localStorage.getItem(testimonialsKey)) {
+        localStorage.setItem(testimonialsKey, JSON.stringify(defaultTestimonials));
+        console.log('Varsayılan yorumlar yüklendi');
+    }
+    
     // Rezervasyonları kontrol et
-    if (!localStorage.getItem(CONFIG.STORAGE_PREFIX + 'bookings')) {
-        localStorage.setItem(CONFIG.STORAGE_PREFIX + 'bookings', JSON.stringify([]));
+    if (!localStorage.getItem(bookingsKey)) {
+        localStorage.setItem(bookingsKey, JSON.stringify([]));
     }
     
     // İstatistikleri kontrol et
-    if (!localStorage.getItem(CONFIG.STORAGE_PREFIX + 'stats')) {
+    if (!localStorage.getItem(statsKey)) {
         const stats = {
             totalBookings: 0,
             happyCustomers: 1000,
             averageRating: 4.8,
             lastUpdated: new Date().toISOString()
         };
-        localStorage.setItem(CONFIG.STORAGE_PREFIX + 'stats', JSON.stringify(stats));
+        localStorage.setItem(statsKey, JSON.stringify(stats));
     }
 }
 
@@ -554,168 +693,141 @@ function createVehicleCard(vehicle) {
 // ===== TESTIMONIAL SLIDER =====
 function initTestimonialSlider() {
     const slider = document.getElementById('testimonialSlider');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    const dotsContainer = document.getElementById('sliderDots');
-    
     if (!slider) return;
     
-    const cards = slider.querySelectorAll('.testimonial-card');
-    const cardCount = cards.length;
-    let currentIndex = 0;
-    let autoSlideInterval;
+    // Yorumları LocalStorage'dan al
+    const storageKey = CONFIG.STORAGE_PREFIX + 'testimonials';
+    const testimonials = JSON.parse(localStorage.getItem(storageKey) || '[]');
     
-    // Dots oluştur
-    function createDots() {
-        if (!dotsContainer) return;
-        
-        dotsContainer.innerHTML = '';
-        for (let i = 0; i < cardCount; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-            if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(i));
-            dotsContainer.appendChild(dot);
-        }
+    if (testimonials.length === 0) {
+        slider.innerHTML = `
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>Henüz yorum bulunmamaktadır.</p>
+                </div>
+            </div>
+        `;
+        return;
     }
     
-    // Slider'ı kaydır
-    function goToSlide(index) {
-        currentIndex = index;
-        
-        // Sınır kontrolü
-        if (currentIndex < 0) currentIndex = 0;
-        if (currentIndex >= cardCount) currentIndex = cardCount - 1;
-        
-        // Card genişliğini hesapla (responsive için)
-        const card = cards[0];
-        const cardWidth = card.offsetWidth;
-        const gap = 30; // CSS'deki gap değeri
-        
-        // Kaydırma pozisyonunu hesapla
-        const scrollPosition = currentIndex * (cardWidth + gap);
-        
-        // Yumuşak kaydırma
-        slider.scrollTo({
-            left: scrollPosition,
-            behavior: 'smooth'
-        });
-        
-        // Dots'ı güncelle
-        updateDots();
-        
-        // Buton durumlarını güncelle
-        updateButtons();
-    }
-    
-    // Dots'ı güncelle
-    function updateDots() {
-        const dots = dotsContainer.querySelectorAll('.dot');
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentIndex);
-        });
-    }
-    
-    // Buton durumlarını güncelle
-    function updateButtons() {
-        if (prevBtn) prevBtn.disabled = currentIndex === 0;
-        if (nextBtn) nextBtn.disabled = currentIndex >= cardCount - 3; // 3 card görünüyor
-    }
-    
-    // Otomatik kaydırma
-    function startAutoSlide() {
-        autoSlideInterval = setInterval(() => {
-            if (currentIndex < cardCount - 1) {
-                goToSlide(currentIndex + 1);
-            } else {
-                goToSlide(0); // Başa dön
-            }
-        }, 5000); // 5 saniyede bir
-    }
-    
-    // Otomatik kaydırmayı durdur
-    function stopAutoSlide() {
-        if (autoSlideInterval) {
-            clearInterval(autoSlideInterval);
-        }
-    }
-    
-    // İlk dot'ları oluştur
-    createDots();
-    
-    // Buton event'lerini ekle
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            goToSlide(currentIndex - 1);
-            stopAutoSlide();
-            setTimeout(startAutoSlide, 10000); // 10 saniye sonra tekrar başlat
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            goToSlide(currentIndex + 1);
-            stopAutoSlide();
-            setTimeout(startAutoSlide, 10000); // 10 saniye sonra tekrar başlat
-        });
-    }
-    
-    // Scroll event'i ile güncel index'i takip et
-    slider.addEventListener('scroll', () => {
-        const cardWidth = cards[0].offsetWidth;
-        const gap = 30;
-        const scrollLeft = slider.scrollLeft;
-        const newIndex = Math.round(scrollLeft / (cardWidth + gap));
-        
-        if (newIndex !== currentIndex) {
-            currentIndex = newIndex;
-            updateDots();
-            updateButtons();
-        }
+    // Yorumları slider'a ekle
+    testimonials.forEach((testimonial, index) => {
+        const card = createTestimonialCard(testimonial, index);
+        slider.appendChild(card);
     });
     
-    // Mouse hover'da otomatik kaydırmayı durdur
-    slider.addEventListener('mouseenter', stopAutoSlide);
-    slider.addEventListener('mouseleave', startAutoSlide);
+    // Otomatik kaydırma başlat
+    startAutoScroll();
     
-    // Touch event'leri için
-    let isDragging = false;
-    let startX;
-    let scrollLeft;
+    // Slider kontrollerini başlat
+    initSliderControls();
+}
+
+function createTestimonialCard(testimonial, index) {
+    const card = document.createElement('div');
+    card.className = 'testimonial-card';
+    card.dataset.id = testimonial.id;
     
-    slider.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-        stopAutoSlide();
+    // Rating yıldızları oluştur
+    let ratingStars = '';
+    const fullStars = Math.floor(testimonial.rating);
+    const hasHalfStar = testimonial.rating % 1 >= 0.5;
+    
+    for (let i = 1; i <= 5; i++) {
+        if (i <= fullStars) {
+            ratingStars += '<i class="fas fa-star"></i>';
+        } else if (i === fullStars + 1 && hasHalfStar) {
+            ratingStars += '<i class="fas fa-star-half-alt"></i>';
+        } else {
+            ratingStars += '<i class="far fa-star"></i>';
+        }
+    }
+    
+    // Avatar için ilk harf
+    const firstLetter = testimonial.author.charAt(0).toUpperCase();
+    
+    card.innerHTML = `
+        <div class="testimonial-content">
+            <p>"${testimonial.content}"</p>
+        </div>
+        <div class="testimonial-author">
+            <div class="author-avatar">${firstLetter}</div>
+            <div class="author-info">
+                <h4>${testimonial.author}</h4>
+                <p>${testimonial.role}</p>
+                <div class="rating">
+                    ${ratingStars}
+                </div>
+                <small style="color: #666; font-size: 12px;">${testimonial.date}</small>
+            </div>
+        </div>
+    `;
+    
+    card.style.animationDelay = `${index * 0.1}s`;
+    return card;
+}
+
+function startAutoScroll() {
+    const slider = document.getElementById('testimonialSlider');
+    if (!slider) return;
+    
+    // CSS animasyonunu durdur
+    slider.classList.remove('paused');
+    
+    // Her 5 saniyede bir otomatik kaydırma
+    autoScrollInterval = setInterval(() => {
+        const firstCard = slider.firstElementChild;
+        if (firstCard) {
+            slider.appendChild(firstCard);
+        }
+    }, 5000);
+    
+    // Mouse hover'da durdur
+    slider.addEventListener('mouseenter', () => {
+        slider.classList.add('paused');
+        clearInterval(autoScrollInterval);
     });
     
-    slider.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.touches[0].pageX - slider.offsetLeft;
-        const walk = (x - startX) * 2;
-        slider.scrollLeft = scrollLeft - walk;
+    // Mouse ayrılınca devam et
+    slider.addEventListener('mouseleave', () => {
+        slider.classList.remove('paused');
+        startAutoScroll();
+    });
+    
+    // Touch için de aynı işlev
+    slider.addEventListener('touchstart', () => {
+        slider.classList.add('paused');
+        clearInterval(autoScrollInterval);
     });
     
     slider.addEventListener('touchend', () => {
-        isDragging = false;
-        setTimeout(startAutoSlide, 5000);
-    });
-    
-    // Responsive için pencere boyutu değiştiğinde dots'ı yenile
-    window.addEventListener('resize', () => {
         setTimeout(() => {
-            goToSlide(currentIndex);
-            createDots();
-        }, 100);
+            slider.classList.remove('paused');
+            startAutoScroll();
+        }, 3000);
+    });
+}
+
+function initSliderControls() {
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const slider = document.getElementById('testimonialSlider');
+    
+    if (!prevBtn || !nextBtn || !slider) return;
+    
+    prevBtn.addEventListener('click', () => {
+        const lastCard = slider.lastElementChild;
+        if (lastCard) {
+            slider.insertBefore(lastCard, slider.firstElementChild);
+        }
     });
     
-    // Otomatik kaydırmayı başlat
-    setTimeout(startAutoSlide, 3000); // 3 saniye sonra başlat
-    
-    // Buton durumlarını güncelle
-    updateButtons();
+    nextBtn.addEventListener('click', () => {
+        const firstCard = slider.firstElementChild;
+        if (firstCard) {
+            slider.appendChild(firstCard);
+        }
+    });
 }
 
 // ===== FİLTRELEME =====
@@ -734,34 +846,8 @@ function initFilters() {
             // Filtreyi uygula
             const filter = this.dataset.filter;
             loadVehicles(filter);
-            
-            // Filtreleme ses efekti (isteğe bağlı)
-            playFilterSound();
         });
     });
-}
-
-function playFilterSound() {
-    // Basit bir ses efekti
-    try {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.value = 800;
-        oscillator.type = 'sine';
-        
-        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.1);
-    } catch (e) {
-        // Ses API'si desteklenmiyorsa sessiz kal
-    }
 }
 
 // ===== REZERVASYON FORMU =====
@@ -779,6 +865,12 @@ function initBookingForm() {
     if (phoneInput) {
         phoneInput.addEventListener('input', formatPhoneNumber);
     }
+    
+    // Hazır notlar seçimini dinle
+    const quickNotes = document.querySelectorAll('input[name="quick-note"]');
+    quickNotes.forEach(note => {
+        note.addEventListener('change', updateMessageFromQuickNotes);
+    });
 }
 
 function formatPhoneNumber(e) {
@@ -794,16 +886,48 @@ function formatPhoneNumber(e) {
     e.target.value = value;
 }
 
+function updateMessageFromQuickNotes() {
+    const messageField = document.getElementById('message');
+    const quickNotes = document.querySelectorAll('input[name="quick-note"]:checked');
+    
+    if (!messageField) return;
+    
+    const selectedNotes = Array.from(quickNotes).map(note => note.value);
+    let currentMessage = messageField.value.trim();
+    
+    // Mevcut mesajda hazır notları temizle
+    selectedNotes.forEach(note => {
+        const noteRegex = new RegExp(note.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+        currentMessage = currentMessage.replace(noteRegex, '').trim();
+    });
+    
+    // Yeni notları ekle
+    if (selectedNotes.length > 0) {
+        const notesText = selectedNotes.join(', ');
+        messageField.value = currentMessage ? `${currentMessage}\n\nEk olarak: ${notesText}` : `Ek olarak: ${notesText}`;
+    } else {
+        messageField.value = currentMessage;
+    }
+}
+
 function submitBooking() {
     // Form verilerini topla
+    const countryCode = document.getElementById('country-code').value;
+    const phoneNumber = document.getElementById('phone').value;
+    const fullPhone = `${countryCode} ${phoneNumber}`;
+    
+    const quickNotes = Array.from(document.querySelectorAll('input[name="quick-note"]:checked'))
+        .map(note => note.value);
+    
     const formData = {
         id: Date.now(),
         name: document.getElementById('name').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
+        phone: fullPhone,
         email: document.getElementById('email').value.trim() || '',
         vehicle: document.getElementById('vehicle-select').value,
         pickupDate: document.getElementById('pickup-date').value,
         returnDate: document.getElementById('return-date').value,
+        quickNotes: quickNotes,
         message: document.getElementById('message').value.trim() || '',
         date: new Date().toLocaleString('tr-TR'),
         status: 'pending',
@@ -834,9 +958,9 @@ function validateBooking(formData) {
     }
     
     // Telefon validasyonu
-    const phoneRegex = /^(05\d{2}\s?\d{3}\s?\d{2}\s?\d{2})$/;
-    if (!phoneRegex.test(formData.phone)) {
-        showAlert('Lütfen geçerli bir telefon numarası giriniz (05XX XXX XX XX)!', 'error');
+    const phoneRegex = /^\+?\d{1,3}\s?\d{3}\s?\d{3}\s?\d{2}\s?\d{2}$/;
+    if (!phoneRegex.test(formData.phone.replace(/\s/g, ''))) {
+        showAlert('Lütfen geçerli bir telefon numarası giriniz!', 'error');
         return false;
     }
     
@@ -876,6 +1000,14 @@ function resetBookingForm() {
     const form = document.getElementById('bookingForm');
     if (form) form.reset();
     
+    // Ülke kodunu Türkiye'ye sıfırla
+    document.getElementById('country-code').value = '+90';
+    
+    // Hazır notları temizle
+    document.querySelectorAll('input[name="quick-note"]').forEach(note => {
+        note.checked = false;
+    });
+    
     // Tarihleri sıfırla
     if (flatpickrLoaded) {
         const today = new Date();
@@ -897,16 +1029,26 @@ function suggestWhatsAppMessage(booking) {
             const selectedVehicle = vehicleSelect.options[vehicleSelect.selectedIndex];
             const vehicleName = selectedVehicle ? selectedVehicle.text : '';
             
-            const message = `Merhaba, ${CONFIG.COMPANY_NAME}'dan rezervasyon yaptırmak istiyorum:%0A%0A` +
-                          `Ad Soyad: ${booking.name}%0A` +
-                          `Telefon: ${booking.phone}%0A` +
-                          `E-posta: ${booking.email || 'Belirtilmemiş'}%0A` +
-                          `Alış Tarihi: ${booking.pickupDate}%0A` +
-                          `İade Tarihi: ${booking.returnDate}%0A` +
-                          `${booking.vehicle ? `Araç: ${vehicleName}%0A` : ''}` +
-                          `${booking.message ? `Not: ${booking.message}` : ''}`;
+            let message = `Merhaba, ${CONFIG.COMPANY_NAME}'dan rezervasyon yaptırmak istiyorum:%0A%0A`;
+            message += `Ad Soyad: ${booking.name}%0A`;
+            message += `Telefon: ${booking.phone}%0A`;
+            message += `E-posta: ${booking.email || 'Belirtilmemiş'}%0A`;
+            message += `Alış Tarihi: ${booking.pickupDate}%0A`;
+            message += `İade Tarihi: ${booking.returnDate}%0A`;
             
-            window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${message}`, '_blank');
+            if (booking.vehicle) {
+                message += `Araç: ${vehicleName}%0A`;
+            }
+            
+            if (booking.quickNotes && booking.quickNotes.length > 0) {
+                message += `Notlar: ${booking.quickNotes.join(', ')}%0A`;
+            }
+            
+            if (booking.message) {
+                message += `Ek Mesaj: ${booking.message}`;
+            }
+            
+            window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER.replace('+', '')}?text=${message}`, '_blank');
         }
     }, 1000);
 }
@@ -955,70 +1097,25 @@ window.quickBook = function(vehicleId) {
     }
 };
 
-// ===== ALERT SİSTEMİ =====
-function showAlert(message, type = 'info') {
-    // Mevcut alert'leri temizle
-    const existingAlerts = document.querySelectorAll('.custom-alert');
-    existingAlerts.forEach(alert => alert.remove());
+// ===== HARİTA YÜKLEME =====
+function loadMap() {
+    const mapContainer = document.getElementById('googleMap');
+    if (!mapContainer) return;
     
-    // Yeni alert oluştur
-    const alert = document.createElement('div');
-    alert.className = `custom-alert ${type}`;
-    alert.setAttribute('role', 'alert');
-    alert.setAttribute('aria-live', 'assertive');
-    
-    const icons = {
-        success: 'check-circle',
-        error: 'exclamation-circle',
-        warning: 'exclamation-triangle',
-        info: 'info-circle'
-    };
-    
-    alert.innerHTML = `
-        <div class="alert-content">
-            <i class="fas fa-${icons[type] || 'info-circle'}"></i>
-            <span>${message}</span>
-            <button class="alert-close" aria-label="Kapat">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
+    // Google Maps embed kodu
+    const mapHTML = `
+        <iframe 
+            src="${CONFIG.MAP_EMBED_URL}"
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
     `;
     
-    document.body.appendChild(alert);
-    
-    // Kapatma butonu
-    const closeBtn = alert.querySelector('.alert-close');
-    closeBtn.addEventListener('click', () => {
-        alert.style.animation = 'slideOutRight 0.3s ease-out forwards';
-        setTimeout(() => alert.remove(), 300);
-    });
-    
-    // Otomatik kapatma
-    setTimeout(() => {
-        if (alert.parentNode) {
-            alert.style.animation = 'slideOutRight 0.3s ease-out forwards';
-            setTimeout(() => alert.remove(), 300);
-        }
-    }, 5000);
-}
-
-// ===== HARİTA =====
-function initMap() {
-    const mapPlaceholder = document.getElementById('googleMap');
-    if (!mapPlaceholder) return;
-    
-    mapPlaceholder.addEventListener('click', function() {
-        const address = encodeURIComponent(CONFIG.COMPANY_ADDRESS);
-        window.open(`https://www.google.com/maps/search/?api=1&query=${address}`, '_blank');
-    });
-    
-    // Klavye erişilebilirliği
-    mapPlaceholder.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            this.click();
-        }
-    });
+    mapContainer.innerHTML = mapHTML + mapContainer.innerHTML;
 }
 
 // ===== SCROLL OLAYLARI =====
@@ -1038,37 +1135,6 @@ function initScrollEvents() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
-    
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            
-            if (href === '#' || href === '#!') return;
-            
-            e.preventDefault();
-            const targetId = href.substring(1);
-            const targetElement = document.getElementById(targetId);
-            
-            if (!targetElement) return;
-            
-            // Mobil menüyü kapat
-            closeMobileMenu();
-            
-            // Scroll
-            const header = document.querySelector('header');
-            const headerHeight = header ? header.offsetHeight : 0;
-            const targetPosition = targetElement.offsetTop - headerHeight - 20;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-            
-            // URL hash'ini güncelle
-            history.pushState(null, null, href);
-        });
-    });
 }
 
 // ===== ADMIN LİNKİ GİZLEME =====
@@ -1153,6 +1219,53 @@ function updateStats() {
     }
 }
 
+// ===== ALERT SİSTEMİ =====
+function showAlert(message, type = 'info') {
+    // Mevcut alert'leri temizle
+    const existingAlerts = document.querySelectorAll('.custom-alert');
+    existingAlerts.forEach(alert => alert.remove());
+    
+    // Yeni alert oluştur
+    const alert = document.createElement('div');
+    alert.className = `custom-alert ${type}`;
+    alert.setAttribute('role', 'alert');
+    alert.setAttribute('aria-live', 'assertive');
+    
+    const icons = {
+        success: 'check-circle',
+        error: 'exclamation-circle',
+        warning: 'exclamation-triangle',
+        info: 'info-circle'
+    };
+    
+    alert.innerHTML = `
+        <div class="alert-content">
+            <i class="fas fa-${icons[type] || 'info-circle'}"></i>
+            <span>${message}</span>
+            <button class="alert-close" aria-label="Kapat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(alert);
+    
+    // Kapatma butonu
+    const closeBtn = alert.querySelector('.alert-close');
+    closeBtn.addEventListener('click', () => {
+        alert.style.animation = 'slideOutRight 0.3s ease-out forwards';
+        setTimeout(() => alert.remove(), 300);
+    });
+    
+    // Otomatik kapatma
+    setTimeout(() => {
+        if (alert.parentNode) {
+            alert.style.animation = 'slideOutRight 0.3s ease-out forwards';
+            setTimeout(() => alert.remove(), 300);
+        }
+    }, 5000);
+}
+
 // ===== HOŞ GELDİN MESAJI =====
 function showWelcomeMessage() {
     console.log(`
@@ -1170,3 +1283,23 @@ function showWelcomeMessage() {
     ╚═══════════════════════════════════════╝
     `);
 }
+
+// ===== TEMİZLİK FONKSİYONLARI =====
+function closeMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    
+    if (mobileMenuBtn && mainNav && window.innerWidth <= 768) {
+        mainNav.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        document.body.style.overflow = 'auto';
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+    }
+}
+
+// Sayfa kapanırken interval'leri temizle
+window.addEventListener('beforeunload', () => {
+    if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+    }
+});
